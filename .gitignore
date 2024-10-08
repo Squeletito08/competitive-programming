@@ -29,3 +29,7 @@
 *.swp
 *.class
 *.jar
+
+
+# Ignorar archivos binarios generados
+*/bin/*

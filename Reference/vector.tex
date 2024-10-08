@@ -1,0 +1,30 @@
+
+\section*{Vector}
+
+\begin{lstlisting}[language=C++]
+	#include <bits/stdc++.h>
+	using namespace std;
+	
+	int main() {
+		vector<int> vec;
+		
+		// Anadir elementos
+		vec.push_back(10); // [10]
+		vec.push_back(20); // [10, 20]
+		
+		// Acceder a elementos
+		cout << vec[0] << endl; // 10
+		
+		// Eliminar el ultimo elemento
+		vec.pop_back(); // [10]
+		
+		// Tamano del vector
+		cout << vec.size() << "\n"; // 1
+		
+		// Vaciar el vector
+		vec.clear();
+		
+		cout << "Vector vacio: " << (vec.empty() ? "Si" : "No") << endl;
+		return 0;
+	}
+\end{lstlisting}

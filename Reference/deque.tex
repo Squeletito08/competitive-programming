@@ -1,0 +1,40 @@
+
+\section*{Deque}
+
+\begin{lstlisting}[language=C++]
+	#include <bits/stdc++.h>
+	using namespace std;
+	
+	int main() {
+		deque<int> deq; //[]
+		
+		// Anadir elementos al final 
+		deq.push_back(10); // [10]
+		deq.push_back(20); // [10, 20]
+		
+		// Anadir elementos al inicio
+		deq.push_front(30); // [30, 10, 20]
+		
+		// Acceder al primer elemento 
+		cout << deq.front() << "\n"; // 30
+		
+		// Acceder al ultimo elemento 
+		cout << deq.back() << "\n"; // 20
+		
+		// Elimina el primer elemento 
+		deq.pop_front(); // [10, 20]
+		
+		// Elimina el ultimo elemento 
+		deq.pop_back(); // [10]
+		
+		// Tamano de la deque
+		cout << deq.size() << "\n"; // 1
+		
+		// Vaciar la deque
+		deq.clear();
+		
+		cout << "Deque vacio: " << (deq.empty() ? "Si" : "No") << "\n";
+		
+		return 0;
+	}
+\end{lstlisting}

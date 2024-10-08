@@ -1,0 +1,57 @@
+
+\section*{Bitset}
+
+\begin{lstlisting}[language=C++]
+#include <bits/stdc++.h>
+using namespace std; 
+
+int main() {
+	bitset<8> bset1;  
+	bitset<8> bset2(12); 
+	cout << "bset1: " << bset1 << endl;  // Salida: 00000000
+	cout << "bset2: " << bset2 << endl;  // Salida: 00001100
+
+	bitset<8> bset3(5);  // 00000101
+	cout << "El bit en la posicion 2: " << bset3[2] << endl;  // Salida: 1
+	
+	bset3.set(2, 0);  // Cambia el bit en la posicion 2 a 0
+	cout << "Despues de modificar: " << bset3 << endl;  // Salida: 00000001
+	cout << endl;
+	
+	bitset<8> bset4(string("1100"));  // Inicializa con un valor binario dado como string
+	bitset<8> bset5(string("1010"));  
+	
+	cout << "bset4: " << bset4 << endl;  // Salida: 00001100
+	cout << "bset5: " << bset5 << endl;  // Salida: 00001010
+	
+	cout << "bset4 & bset5: " << (bset4 & bset5) << endl;  // AND: 00001000
+	cout << "bset4 | bset5: " << (bset4 | bset5) << endl;  // OR:  00001110
+	cout << "bset4 ^ bset5: " << (bset4 ^ bset5) << endl;  // XOR: 00000110
+	
+	cout << "Todos los bits de bset4 estan en 1? " << (bset4.all() ? "Si" : "No") << endl;  // No
+	cout << "Algun bit de bset4 esta en 1? " << (bset4.any() ? "Si" : "No") << endl;  // Si
+	cout << "Ningun bit de bset4 esta en 1? " << (bset4.none() ? "Si" : "No") << endl;  // No
+	cout << "Numero de bits en 1 en bset4: " << bset4.count() << endl;  // 2
+	
+	bset4.flip();  // Invierte todos los bits
+	cout << "Despues de invertir bset4: " << bset4 << endl;  // Salida: 11110011
+	
+	bitset<8> bset6(string("10010101"));  // 10010101
+	cout << "bset6: " << bset6 << endl;  // Salida: 10010101
+	
+	// Convertir a unsigned long
+	cout << "Como numero entero (unsigned long): " << bset6.to_ulong() << endl;  // Convierte a unsigned long: 149
+	
+	// Convertir a int (deberas asegurarte de que el valor este dentro del rango de int)
+	cout << "Como numero entero (int): " << static_cast<int>(bset6.to_ulong()) << endl;  // Convierte a int: 149
+	
+	// Convertir a long long
+	cout << "Como numero entero (long long): " << static_cast<long long>(bset6.to_ulong()) << endl;  // Convierte a long long: 149
+	
+	cout << "Como string: " << bset6.to_string() << endl;  // Convierte a string: "10010101"
+	
+	return 0;
+}
+
+
+\end{lstlisting}

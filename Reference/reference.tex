@@ -1,0 +1,69 @@
+\documentclass{article}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage[a4paper, margin=0.5in]{geometry}
+\usepackage{graphicx} 
+
+\usepackage{xcolor} 
+\definecolor{stronggreen}{rgb}{0.0, 0.5, 0.0}
+
+\pagestyle{empty}
+
+\lstset{
+	language=C++,               % Lenguaje de programación
+	basicstyle=\ttfamily,       % Tipo de letra
+	keywordstyle=\color{blue},  % Palabras clave en azul
+	commentstyle=\color{stronggreen}, % Comentarios en verde
+	stringstyle=\color{red},    % Cadenas en rojo
+	numbers=left,               % Numeración de líneas
+	numberstyle=\tiny\color{gray}, % Estilo de numeración
+	stepnumber=1,               % Paso de numeración
+	numbersep=5pt,              % Separación de la numeración del código
+	showspaces=false,           % No mostrar espacios
+	showstringspaces=false,     % No mostrar espacios en cadenas
+	showtabs=false,             % No mostrar tabulaciones
+	frame=single,               % Borde del código
+	tabsize=2,                  % Tamaño de la tabulación
+	breaklines=true,            % Ajustar líneas largas
+	breakatwhitespace=true,     % Romper líneas en espacios
+	title=\lstname              % Mostrar el nombre del archivo como título
+}
+\begin{document}
+	
+	\input{template.tex}
+	
+	\newpage
+	
+	\input{complejidades.tex}
+	
+	\newpage
+	
+	\input{vector.tex}
+	\newpage
+	\input{list.tex}
+	\newpage
+	\input{deque.tex}
+	\newpage
+	\input{map}
+	\newpage
+	\input{set.tex}
+	\newpage
+	\input{multiset.tex}
+	\newpage
+	\input{pq.tex}
+	\newpage
+	\input{stack.tex}
+	\newpage
+	\input{algorithms.tex}
+	\newpage
+	\input{strings.tex}
+	\newpage
+	\input{binarySearch.tex}
+	\newpage
+	\input{KMP.tex}
+	\newpage
+	\input{segmentTree.tex}
+	\newpage
+	\input{bitset.tex}
+	
+\end{document}

@@ -1,0 +1,40 @@
+
+'\section*{List}
+
+\begin{lstlisting}[language=C++]
+	#include <bits/stdc++.h>
+	using namespace std;
+	
+	int main() {
+		list<int> lst; // []
+		
+		// Anadir elementos al final
+		lst.push_back(10); // [10]
+		lst.push_back(20); // [10, 20]
+		
+		// Anadir elementos al inicio
+		lst.push_front(30); // [30, 10, 20]
+		
+		// Acceder al primer elemento
+		cout << lst.front() << "\n"; // 30
+		
+		// Acceder al ultimo elemento
+		cout << lst.back() << "\n"; // 20
+		
+		// Elimina el primer elemento
+		lst.pop_front(); // [10, 20]
+		
+		// Elimina el ultimo elemento
+		lst.pop_back(); // [10]
+		
+		// Tamano de la lista
+		cout << lst.size() << "\n"; // 1
+		
+		// Vaciar la lista
+		lst.clear();
+		
+		cout << "Lista vacia: " << (lst.empty() ? "Si" : "No") << "\n";
+		
+		return 0;
+	}
+\end{lstlisting}
