@@ -20,6 +20,85 @@ void read_vll(vll &a, int n){for(int i=0; i<n; i++) cin >> a[i];}
 vector<vector<char>> lab; 
 vector<vector<char>> camino; 
 
+bool bfs(ii inicio){
+    queue<ii> cola; 
+    cola.push(inicio);
+
+    while(!cola.empty()){
+        auto sig = cola.front(); 
+        cola.pop(); 
+
+        int i = sig.fi; 
+        int j = sig.se; 
+
+        if(lab[i][j] == 'B'){
+            return true; 
+        }
+
+        if(lab[i][j] == '#'){
+            continue; 
+        }
+
+
+        lab[i][j] = '#';
+        
+        cola.push({i+1, j}); 
+        if(camino[i+1][j] == 'x') camino[i+1][j] = 'U'; 
+
+        cola.push({i-1, j}); 
+        if(camino[i-1][j] == 'x') camino[i-1][j] = 'D'; 
+
+        cola.push({i, j+1}); 
+        if(camino[i][j+1] == 'x') camino[i][j+1] = 'L';
+
+        cola.push({i, j-1}); 
+        if(camino[i][j-1] == 'x') camino[i][j-1] = 'R'; 
+    }
+
+    return false; 
+}
+
+string cam(ii inicio){
+    queue<ii> cola; 
+    cola.push({inicio.fi, inicio.se}); 
+
+    string res = "";
+
+    while(!cola.empty()){
+        auto sig = cola.front(); 
+        cola.pop(); 
+
+        int i = sig.fi; 
+        int j = sig.se;
+        
+        if(camino[i][j] == 'A'){
+            return res; 
+        }
+
+        if(camino[i][j] == 'U'){
+            res += 'D'; 
+            cola.push({i-1, j});
+        }
+
+        if(camino[i][j] == 'D'){
+            res += 'U';
+            cola.push({i+1, j});
+        }
+
+        if(camino[i][j] == 'R'){
+            res += 'L';
+            cola.push({i, j+1});
+        }
+
+        if(camino[i][j] == 'L'){
+            res += 'R';
+            cola.push({i, j-1}); 
+        }
+    }
+
+    return res; 
+}
+
 void solve(){
     int n, m; cin >> n >> m; 
 
@@ -41,14 +120,23 @@ void solve(){
                 fin.fi = i; 
                 fin.se = j; 
             }
-            lab[i][j] = x;
+            lab[i][j] = c;
         }
     }
 
+    bool sePuede = bfs(inicio); 
 
-    
-
-
+    if(!sePuede){
+        cout << "NO";
+    }
+    else{
+        camino[inicio.fi][inicio.se] = 'A';
+        string res = cam(fin);
+        cout << "YES" << endl; 
+        reverse(res.begin(), res.end());
+        cout << res.size() << endl << res;
+    }
+    cout << endl; 
 }
 
 int main(){
