@@ -20,30 +20,26 @@ const ll MOD = 1e9+7;
 
 
 void solve(){
-    string s; 
-    getline(cin, s); 
-    set<char> conjunto = {'a', 'b', 'c', 'd', 'e', 'f', 'g'}; 
-    
-    map<char, int> mapa; 
-    
-    for(int i = 0; i < (int)s.size(); i++){
-        if(conjunto.count(s[i])){
-            mapa[s[i]]++; 
-        }
+    ll n, p; cin >> n >> p; 
+
+    ll res = 0; 
+    ll m_sue = n / 2; 
+    ll m_pat = p / 2; 
+
+    ll resto = m_sue - m_pat; 
+
+    if(n % 2 == 0){
+        ll sobrante = 2*(resto % p); 
+
+        if(sobrante != p)
+            res += sobrante; 
     }
-    
-    auto it = mapa.begin();
-    char res = it->f; 
-    int max = it->second; 
-    
-    for(auto& [key, value]: mapa){
-        if(value > max){
-            res = key; 
-            max = value; 
-        }
+    else{
+        res += 2*(resto % p); 
     }
+
+    cout << res << endl; 
     
-    cout << (char)toupper(res) << endl; 
 }
 
 int main(){
@@ -51,9 +47,6 @@ int main(){
     cin.tie(0); cout.tie(0); 
 
     int t = 1; 
-    cin >> t; 
-    cin.ignore(); 
-
     while(t--){
         solve(); 
     }
