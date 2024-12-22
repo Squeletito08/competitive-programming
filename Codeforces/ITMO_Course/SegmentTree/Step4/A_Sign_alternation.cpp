@@ -32,13 +32,25 @@ void read_vll(vll &a, int n)
 const ll MOD = 1e9 + 7;
 const ll INF = 1e18;
 
-vll st;
+vector<pll> st;
 
-void build(int v, int tl, int tr, vll &nums)
+pll merge(pll a, pll b)
+{
+    return {a.fi + b.fi, a.se + b.se};
+}
+
+void build(int v, int tl, int tr, vi &nums)
 {
     if (tl == tr)
     {
-        st[v] = nums[tl];
+        if (tl % 2 != 0)
+        {
+            st[v] = {nums[tl], 0};
+        }
+        else
+        {
+            st[v] = {0, nums[tl]};
+        }
         return;
     }
 
@@ -46,19 +58,25 @@ void build(int v, int tl, int tr, vll &nums)
     build(v * 2, tl, tm, nums);
     build(v * 2 + 1, tm + 1, tr, nums);
 
-    st[v] = max(st[v * 2], st[v * 2 + 1]);
+    st[v] = merge(st[v * 2], st[v * 2 + 1]);
 }
 
 void update(int v, int tl, int tr, int i, int val)
 {
     if (tl == tr)
     {
-        st[v] = val;
+        if (tl % 2 != 0)
+        {
+            st[v] = {val, 0};
+        }
+        else
+        {
+            st[v] = {0, val};
+        }
         return;
     }
 
     int tm = (tl + tr) / 2;
-
     if (i <= tm)
     {
         update(v * 2, tl, tm, i, val);
@@ -68,71 +86,66 @@ void update(int v, int tl, int tr, int i, int val)
         update(v * 2 + 1, tm + 1, tr, i, val);
     }
 
-    st[v] = max(st[v * 2], st[v * 2 + 1]);
+    st[v] = merge(st[v * 2], st[v * 2 + 1]);
 }
 
-int query(int v, int tl, int tr, int val, int l)
+pll query(int v, int tl, int tr, int l, int r)
 {
-
-    if (tr < l)
+    if (tl >= l && tr <= r)
     {
-        return -1;
+        return st[v];
     }
-    if (tl == tr)
+    if (tl > r || tr < l)
     {
-        return tl;
+        return {0, 0};
     }
 
     int tm = (tl + tr) / 2;
 
-    int res = -1;
-    if (st[v * 2] >= val)
-    {
-        res = query(v * 2, tl, tm, val, l);
-    }
-
-    if (st[v * 2 + 1] >= val && res == -1)
-    {
-        res = query(v * 2 + 1, tm + 1, tr, val, l);
-    }
-
-    return res;
+    return merge(query(v * 2, tl, tm, l, r), query(v * 2 + 1, tm + 1, tr, l, r));
 }
 
 void solve()
 {
-    int n, m;
-    cin >> n >> m;
-    vll nums(n);
-    read_vll(nums, n);
-    st.assign(4 * n, -INF);
+    int n;
+    cin >> n;
 
-    build(1, 0, n - 1, nums);
+    vi nums(n + 1);
+
+    for (int i = 1; i <= n; i++)
+        cin >> nums[i];
+
+    st.assign(4 * n, {0, 0});
+
+    build(1, 1, n, nums);
+
+    int m;
+    cin >> m;
 
     while (m--)
     {
-        int p;
-        cin >> p;
+        int op;
+        cin >> op;
 
-        if (p == 1)
+        if (op == 0)
         {
-            int i, v;
-            cin >> i >> v;
-            update(1, 0, n - 1, i, v);
+            int i, j;
+            cin >> i >> j;
+            update(1, 1, n, i, j);
         }
         else
         {
+            int l, r;
+            cin >> l >> r;
+            pll res = query(1, 1, n, l, r);
 
-            int v, l;
-            cin >> v >> l;
-
-            if (st[1] < v)
+            if (l % 2 != 0)
             {
-                cout << -1 << endl;
+                cout << res.fi - res.se << endl;
             }
             else
             {
-                cout << query(1, 0, n - 1, v, l) << endl;
+                cout << res.se - res.fi << endl;
             }
         }
     }
