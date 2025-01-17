@@ -1,0 +1,1 @@
+cout << "\n\n----------Con double-ended queue----------" << endl;
