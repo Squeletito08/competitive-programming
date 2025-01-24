@@ -34,43 +34,24 @@ const ll INF = 1e18;
 
 void solve()
 {
-  int n, x;
-  cin >> n >> x;
+  int n, k;
+  cin >> n >> k;
 
-  int ctd0 = 0;
-  int min_l = n;
-  vi nums(n);
+  vll a(n), b(n);
+  read_vll(a, n);
+  read_vll(b, n);
 
-  for (int i = 0; i < n; i++)
+  ll sum = 0;
+  ll maxi = b[0];
+  ll res = a[0];
+  for (int i = 0; i < min(n, k); i++)
   {
-    cin >> nums[i];
-    nums[i] = nums[i] % x;
-    if (nums[i] == 0)
-      ctd0++;
-    else
-      min_l = min(i, min_l);
-  }
+    int cost = i + 1;
+    sum += a[i];
+    maxi = max(maxi, b[i]);
 
-  if (ctd0 == n)
-  {
-    cout << -1 << endl;
-    return;
-  }
-
-  int sum = 0;
-  int res = -1;
-
-  for (int i = 0; i < n; i++)
-  {
-    sum = (sum + nums[i]) % x;
-
-    if (sum % x != 0)
-    {
-      res = max(res, i + 1);
-      continue;
-    }
-
-    res = max(res, i - min_l);
+    ll current = sum + (k - cost) * maxi;
+    res = max(current, res);
   }
 
   cout << res << endl;

@@ -34,46 +34,34 @@ const ll INF = 1e18;
 
 void solve()
 {
-  int n, x;
-  cin >> n >> x;
+  int n;
+  cin >> n;
+  vi a(n), b(n);
 
-  int ctd0 = 0;
-  int min_l = n;
-  vi nums(n);
+  read_vi(a, n);
+  read_vi(b, n);
 
-  for (int i = 0; i < n; i++)
-  {
-    cin >> nums[i];
-    nums[i] = nums[i] % x;
-    if (nums[i] == 0)
-      ctd0++;
-    else
-      min_l = min(i, min_l);
-  }
-
-  if (ctd0 == n)
-  {
-    cout << -1 << endl;
-    return;
-  }
-
-  int sum = 0;
-  int res = -1;
+  int ctd = 0;
 
   for (int i = 0; i < n; i++)
   {
-    sum = (sum + nums[i]) % x;
+    bool sePuede = true;
 
-    if (sum % x != 0)
+    for (int j = 0; j < n - i; j++)
     {
-      res = max(res, i + 1);
-      continue;
+      if (a[j] > b[j + i])
+      {
+        sePuede = false;
+        ctd++;
+        break;
+      }
     }
 
-    res = max(res, i - min_l);
+    if (sePuede)
+      break;
   }
 
-  cout << res << endl;
+  cout << ctd << endl;
 }
 
 int main()

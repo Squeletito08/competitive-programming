@@ -34,43 +34,37 @@ const ll INF = 1e18;
 
 void solve()
 {
-  int n, x;
-  cin >> n >> x;
+  ll n, r, avg;
+  cin >> n >> r >> avg;
 
-  int ctd0 = 0;
-  int min_l = n;
-  vi nums(n);
+  vector<pair<ll, ll>> exams(n);
 
+  ll sum = 0;
   for (int i = 0; i < n; i++)
   {
-    cin >> nums[i];
-    nums[i] = nums[i] % x;
-    if (nums[i] == 0)
-      ctd0++;
-    else
-      min_l = min(i, min_l);
+    int a, b;
+    cin >> a >> b;
+    exams[i] = {b, a};
+    sum += a;
   }
 
-  if (ctd0 == n)
+  if (sum / n >= avg)
   {
-    cout << -1 << endl;
+    cout << 0 << endl;
     return;
   }
 
-  int sum = 0;
-  int res = -1;
+  sort(all(exams));
 
-  for (int i = 0; i < n; i++)
+  ll x = (avg * n) - sum;
+  ll res = 0;
+  int i = 0;
+  while (x && i < n)
   {
-    sum = (sum + nums[i]) % x;
-
-    if (sum % x != 0)
-    {
-      res = max(res, i + 1);
-      continue;
-    }
-
-    res = max(res, i - min_l);
+    ll dif = min(x, r - exams[i].se);
+    res += dif * exams[i].fi;
+    x -= dif;
+    i++;
   }
 
   cout << res << endl;
@@ -81,7 +75,6 @@ int main()
   owo
 
       int tt = 1;
-  cin >> tt;
 
   while (tt--)
   {

@@ -32,48 +32,51 @@ void read_vll(vll &a, int n)
 const ll MOD = 1e9 + 7;
 const ll INF = 1e18;
 
+bool esCruz(vector<vector<char>> &m, int i, int j)
+{
+  return m[i][j] == '#' && m[i - 1][j] == '#' && m[i + 1][j] == '#' && m[i][j - 1] == '#' && m[i][j + 1] == '#';
+}
 void solve()
 {
-  int n, x;
-  cin >> n >> x;
+  int n;
+  cin >> n;
 
-  int ctd0 = 0;
-  int min_l = n;
-  vi nums(n);
+  int ctd = 0;
 
-  for (int i = 0; i < n; i++)
+  int ctd2 = 0;
+  vector<vector<char>> m(n + 2, vector<char>(n + 2, '.'));
+
+  for (int i = 1; i <= n; i++)
   {
-    cin >> nums[i];
-    nums[i] = nums[i] % x;
-    if (nums[i] == 0)
-      ctd0++;
-    else
-      min_l = min(i, min_l);
+    for (int j = 1; j <= n; j++)
+    {
+      char c;
+      cin >> c;
+      if (c == '#')
+        ctd++;
+      m[i][j] = c;
+    }
   }
 
-  if (ctd0 == n)
+  for (int i = 1; i <= n; i++)
   {
-    cout << -1 << endl;
+    for (int j = 1; j <= n; j++)
+    {
+      if (m[i][j] == '#' && esCruz(m, i, j))
+      {
+        ctd2++;
+        m[i][j] = m[i - 1][j] = m[i + 1][j] = m[i][j - 1] = m[i][j + 1] = '.';
+      }
+    }
+  }
+
+  if (ctd2 * 5 == ctd)
+  {
+    cout << "YES" << endl;
     return;
   }
 
-  int sum = 0;
-  int res = -1;
-
-  for (int i = 0; i < n; i++)
-  {
-    sum = (sum + nums[i]) % x;
-
-    if (sum % x != 0)
-    {
-      res = max(res, i + 1);
-      continue;
-    }
-
-    res = max(res, i - min_l);
-  }
-
-  cout << res << endl;
+  cout << "NO" << endl;
 }
 
 int main()
@@ -81,7 +84,6 @@ int main()
   owo
 
       int tt = 1;
-  cin >> tt;
 
   while (tt--)
   {

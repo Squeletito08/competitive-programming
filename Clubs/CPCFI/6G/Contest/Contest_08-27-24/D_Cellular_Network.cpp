@@ -34,33 +34,25 @@ const ll INF = 1e18;
 
 void solve()
 {
-    int n;
-    cin >> n;
+    int n, m;
+    cin >> n >> m;
 
-    map<int, int> m;
+    vll a(n), b(m);
+    read_vll(a, n);
+    read_vll(b, m);
 
-    int x;
+    ll min_dif = INF;
+    ll res = 0;
+    int j = 0;
+
     for (int i = 0; i < n; i++)
     {
-        cin >> x;
-        ++m[x];
-    }
+        while ((j < m - 1) && b[j + 1] <= a[i])
+            j++;
 
-    int ctd = 0;
-    ll res = 0;
-    for (auto &x : m)
-    {
-        ll val = x.se;
-        if (val >= 3)
-        {
-            res += val * (val - 1) * (val - 2) / 6;
-        }
-        if (val >= 2)
-        {
-            res += (val * (val - 1)) / 2 * ctd;
-        }
+        int sig = (j < m - 1) ? b[j + 1] : b[j];
 
-        ctd += val;
+        res = max(res, min(abs(a[i] - b[j]), abs(a[i] - sig)));
     }
 
     cout << res << endl;
@@ -71,7 +63,6 @@ int main()
     owo
 
         int tt = 1;
-    cin >> tt;
 
     while (tt--)
     {
