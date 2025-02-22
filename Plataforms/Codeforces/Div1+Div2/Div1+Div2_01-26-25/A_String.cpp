@@ -50,6 +50,17 @@ constexpr int MOD = 1e9 + 7;
 
 void solve()
 {
+  int ctd = 0;
+  string s;
+  cin >> s;
+
+  for (int i = 0; i < sz(s); i++)
+  {
+    if (s[i] == '1')
+      ctd++;
+  }
+
+  cout << ctd << endl;
 }
 
 int main()

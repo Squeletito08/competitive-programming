@@ -50,6 +50,57 @@ constexpr int MOD = 1e9 + 7;
 
 void solve()
 {
+  int n;
+  cin >> n;
+
+  int ctd = 0;
+  int s1 = INT_MAX;
+  int s2 = INT_MAX;
+  for (int i = 0; i < n; i++)
+  {
+    int x;
+    cin >> x;
+
+    if (s1 >= x && s2 >= x)
+    {
+      if (abs(s1 - x) <= abs(s2 - x))
+      {
+        s1 = x;
+      }
+      else
+      {
+        s2 = x;
+      }
+
+      continue;
+    }
+
+    if (s1 >= x)
+    {
+      s1 = x;
+    }
+
+    if (s2 >= x)
+    {
+      s2 = x;
+    }
+
+    if (s1 < x && s2 < x)
+    {
+      if (abs(s1 - x) <= abs(s2 - x))
+      {
+        s1 = x;
+      }
+      else
+      {
+        s2 = x;
+      }
+
+      ctd++;
+    }
+  }
+
+  cout << ctd << endl;
 }
 
 int main()

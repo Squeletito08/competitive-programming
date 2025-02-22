@@ -45,11 +45,57 @@ void read_v(vector<T> &a)
 }
 
 constexpr ll INF_LL = LONG_LONG_MAX;
-constexpr int INF_INT = INT_MAX;
+constexpr int INF_INT = 1e7;
 constexpr int MOD = 1e9 + 7;
 
-void solve()
+void solve_greedy()
 {
+  int n;
+  cin >> n;
+
+  int ctd = 0;
+  while (n)
+  {
+
+    set<int, greater<int>> digitos;
+
+    int aux = n;
+
+    while (aux)
+    {
+      digitos.insert(aux % 10);
+      aux /= 10;
+    }
+
+    n -= *digitos.begin();
+    ctd++;
+  }
+
+  cout << ctd << endl;
+}
+
+void solve_dp()
+{
+  int n;
+  cin >> n;
+
+  vi dp(n + 1, INF_INT);
+
+  dp[0] = 0;
+
+  for (int i = 1; i <= n; i++)
+  {
+    int aux = i;
+
+    while (aux)
+    {
+      int d = aux % 10;
+      dp[i] = min(dp[i], dp[i - d] + 1);
+      aux /= 10;
+    }
+  }
+
+  cout << dp[n] << endl;
 }
 
 int main()
@@ -58,10 +104,9 @@ int main()
   cin.tie(0);
 
   int t = 1;
-  cin >> t;
 
   for (tc = 1; tc <= t; tc++)
-    solve();
+    solve_dp();
 
   return 0;
 }

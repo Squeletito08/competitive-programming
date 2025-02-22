@@ -48,8 +48,82 @@ constexpr ll INF_LL = LONG_LONG_MAX;
 constexpr int INF_INT = INT_MAX;
 constexpr int MOD = 1e9 + 7;
 
+vvi st;
+
+void build(int v, int l, int r, vi &a)
+{
+  if (l == r)
+  {
+    st[v] = {a[l]};
+    return;
+  }
+
+  int m = l + (r - l) / 2;
+  build(v * 2, l, m, a);
+  build(v * 2 + 1, m + 1, r, a);
+
+  merge(all(st[v * 2]), all(st[v * 2 + 1]), back_inserter(st[v]));
+}
+
+int query(int v, int tl, int tr, int l, int r, int val)
+{
+  if (tl >= l && tr <= r)
+  {
+    return distance(upper_bound(all(st[v]), val), st[v].end());
+  }
+
+  if (tl > r || tr < l)
+  {
+    return 0;
+  }
+
+  int tm = tl + (tr - tl) / 2;
+
+  return query(v * 2, tl, tm, l, r, val) + query(v * 2 + 1, tm + 1, tr, l, r, val);
+}
+
 void solve()
 {
+  int n;
+  cin >> n;
+
+  st = {};
+
+  vi a;
+  vi b;
+
+  for (int i = 1; i <= n; i++)
+  {
+    int x;
+    cin >> x;
+
+    if (x < i)
+    {
+      a.pb(x);
+      b.pb(i);
+    }
+  }
+
+  n = sz(a);
+
+  if (n <= 1)
+  {
+    cout << 0 << endl;
+    return;
+  }
+
+  st.resize(n * 4);
+  build(1, 0, n - 1, a);
+
+  ll res = 0;
+
+  for (int i = 0; i < n; i++)
+  {
+    int val = query(1, 0, n - 1, i + 1, n - 1, b[i]);
+    res += val;
+  }
+
+  cout << res << endl;
 }
 
 int main()

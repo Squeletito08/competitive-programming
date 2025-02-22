@@ -50,6 +50,59 @@ constexpr int MOD = 1e9 + 7;
 
 void solve()
 {
+  int n;
+  cin >> n;
+
+  vector<pll> nums;
+
+  for (int i = 0; i < n; i++)
+  {
+    ll a, b;
+    cin >> a >> b;
+    nums.emplace_back(a, b);
+  }
+
+  sort(all(nums), [](const pll &a, const pll &b) -> bool
+       { return a.se < b.se; });
+
+  int i = 0;
+  int j = n - 1;
+
+  ll total = 0;
+  ll comprados = 0;
+
+  while (i <= j)
+  {
+
+    ll a1 = nums[i].fi;
+    ll b1 = nums[i].se;
+    ll a2 = nums[j].fi;
+    ll b2 = nums[j].se;
+
+    if (b1 <= comprados)
+    {
+      total += a1;
+      comprados += a1;
+      i++;
+      continue;
+    }
+
+    ll faltan = b1 - comprados;
+
+    while (faltan && i <= j)
+    {
+      ll quito = min(faltan, nums[j].fi);
+      nums[j].fi -= quito;
+      comprados += quito;
+      total += 2 * quito;
+      faltan -= quito;
+
+      if (nums[j].fi == 0)
+        j--;
+    }
+  }
+
+  cout << total << endl;
 }
 
 int main()
@@ -58,7 +111,6 @@ int main()
   cin.tie(0);
 
   int t = 1;
-  cin >> t;
 
   for (tc = 1; tc <= t; tc++)
     solve();

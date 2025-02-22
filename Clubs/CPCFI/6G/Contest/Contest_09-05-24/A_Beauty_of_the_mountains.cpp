@@ -50,6 +50,67 @@ constexpr int MOD = 1e9 + 7;
 
 void solve()
 {
+  int n, m, k;
+  cin >> n >> m >> k;
+
+  ll sum1 = 0;
+  ll sum2 = 0;
+
+  vvl nums(n, vll(m, 0));
+
+  for (int i = 0; i < n; i++)
+    for (int j = 0; j < m; j++)
+      cin >> nums[i][j];
+
+  vvl mont(n + 2, vll(m + 2, 0));
+
+  char c;
+  for (int i = 1; i <= n; i++)
+  {
+    for (int j = 1; j <= m; j++)
+    {
+      cin >> c;
+      mont[i][j] = (c == '0' ? 0 : 1);
+      if (c == '0')
+        sum1 += nums[i - 1][j - 1];
+      else
+        sum2 += nums[i - 1][j - 1];
+      mont[i][j] += mont[i - 1][j] + mont[i][j - 1] - mont[i - 1][j - 1];
+    }
+  }
+
+  if (sum1 == sum2)
+  {
+    cout << "YES" << endl;
+    return;
+  }
+
+  error(sum1, sum2);
+
+  for (int i = k; i <= n; i++)
+  {
+    for (int j = k; j <= m; j++)
+    {
+
+      ll x = mont[i][j] - mont[i - k][j] - mont[i][j - k] + mont[i - k][j - k];
+      ll y = k * k - x;
+
+      if (x - y == 0)
+        continue;
+
+      ll val = (sum2 - sum1) / (x - y);
+      ll cant = (sum1 + (x * val)) - (sum2 + (y * val));
+
+      error(x, y, val, cant);
+      if (cant == 0)
+      {
+        cout << "YES" << endl;
+        return;
+      }
+    }
+  }
+
+  cout << "NO" << endl;
 }
 
 int main()

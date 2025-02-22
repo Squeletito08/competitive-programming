@@ -50,6 +50,29 @@ constexpr int MOD = 1e9 + 7;
 
 void solve()
 {
+  int n;
+  cin >> n;
+
+  vi res;
+
+  for (int i = 1; i <= n; i++)
+  {
+    for (int j = 1; j <= 4; j++)
+    {
+      char x;
+      cin >> x;
+
+      if (x == '#')
+        res.pb(j);
+    }
+  }
+
+  reverse(all(res));
+
+  for (auto x : res)
+    cout << x << " ";
+
+  cout << endl;
 }
 
 int main()

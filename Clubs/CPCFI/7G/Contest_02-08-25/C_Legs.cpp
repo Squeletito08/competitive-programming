@@ -50,6 +50,20 @@ constexpr int MOD = 1e9 + 7;
 
 void solve()
 {
+  int n;
+  cin >> n;
+
+  int ctd = 0;
+
+  if (n >= 4)
+  {
+    ctd += n / 4;
+    n = n % 4;
+  }
+
+  ctd += n / 2;
+
+  cout << ctd << endl;
 }
 
 int main()

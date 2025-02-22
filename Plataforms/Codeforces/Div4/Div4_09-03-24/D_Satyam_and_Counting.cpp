@@ -50,6 +50,41 @@ constexpr int MOD = 1e9 + 7;
 
 void solve()
 {
+  int n;
+  cin >> n;
+
+  vector<pii> points;
+  vector<bool> line_0(n + 1, false);
+  vector<bool> line_1(n + 1, false);
+
+  for (int i = 0; i < n; i++)
+  {
+    int x, y;
+    cin >> x >> y;
+    points.emplace_back(x, y);
+
+    if (y == 0)
+      line_0[x] = true;
+
+    if (y == 1)
+      line_1[x] = true;
+  }
+
+  ll res1 = 0;
+  ll res2 = 0;
+  sort(all(points));
+
+  for (int i = 0; i < n; i++)
+  {
+    auto [x, y] = points[i];
+
+    if (y == 0 && line_1[x] || y == 1 && line_0[x])
+      res1 += n - 2;
+
+    if ((y == 0 && x >= 1 && line_1[x - 1] && x <= n - 1 && line_1[x + 1]) || (y == 1 && x >= 1 && line_0[x - 1] && x <= n - 1 && line_0[x + 1]))
+      res2++;
+  }
+  cout << res1 / 2 + res2 << endl;
 }
 
 int main()

@@ -50,6 +50,28 @@ constexpr int MOD = 1e9 + 7;
 
 void solve()
 {
+  int n, m;
+  cin >> n >> m;
+
+  vi nums(n);
+  read_v(nums);
+
+  vi querys(n + 1);
+
+  set<int> aux;
+
+  for (int i = n; i >= 1; i--)
+  {
+    aux.insert(nums[i - 1]);
+    querys[i] = aux.size();
+  }
+
+  while (m--)
+  {
+    int l;
+    cin >> l;
+    cout << querys[l] << endl;
+  }
 }
 
 int main()
@@ -58,7 +80,6 @@ int main()
   cin.tie(0);
 
   int t = 1;
-  cin >> t;
 
   for (tc = 1; tc <= t; tc++)
     solve();

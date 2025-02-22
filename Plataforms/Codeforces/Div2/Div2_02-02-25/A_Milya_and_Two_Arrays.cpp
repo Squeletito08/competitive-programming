@@ -50,6 +50,28 @@ constexpr int MOD = 1e9 + 7;
 
 void solve()
 {
+  int n;
+  cin >> n;
+
+  vi a(n), b(n);
+  read_v(a);
+  read_v(b);
+
+  set<int> sum;
+
+  for (int i = 0; i < n; i++)
+  {
+    for (int j = 0; j < n; j++)
+    {
+      if (b[j] != -1 && !sum.count(a[i] + b[j]))
+      {
+        sum.insert(a[i] + b[j]);
+        b[j] = -1;
+      }
+    }
+  }
+
+  cout << (sum.size() >= 3 ? "YES" : "NO") << endl;
 }
 
 int main()

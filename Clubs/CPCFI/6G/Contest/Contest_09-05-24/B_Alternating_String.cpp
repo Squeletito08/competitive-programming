@@ -50,6 +50,72 @@ constexpr int MOD = 1e9 + 7;
 
 void solve()
 {
+  int n;
+  cin >> n;
+
+  vvi pares(27, vi(n + 1, 0));
+  vvi impares(27, vi(n + 1, 0));
+
+  for (int i = 1; i <= n; i++)
+  {
+    char c;
+    cin >> c;
+
+    if (i % 2 == 0)
+    {
+      pares[c - 'a'][i]++;
+    }
+    else
+    {
+      impares[c - 'a'][i]++;
+    }
+
+    for (char x = 'a'; x <= 'z'; x++)
+    {
+      pares[x - 'a'][i] += pares[x - 'a'][i - 1];
+      impares[x - 'a'][i] += impares[x - 'a'][i - 1];
+    }
+  }
+
+  int maxPar = 0;
+  int maxImpar = 0;
+
+  if (n % 2 == 0)
+  {
+
+    for (char c = 'a'; c <= 'z'; c++)
+    {
+      maxPar = max(maxPar, pares[c - 'a'][n]);
+      maxImpar = max(maxImpar, impares[c - 'a'][n]);
+    }
+
+    cout << n / 2 - maxPar + n / 2 - maxImpar << endl;
+    return;
+  }
+
+  int minOp = INF_INT;
+
+  for (int i = 1; i <= n; i++)
+  {
+    maxPar = 0;
+    maxImpar = 0;
+    for (char c = 'a'; c <= 'z'; c++)
+    {
+      int cantCPar = pares[c - 'a'][i - 1];
+      int cantCImpar = impares[c - 'a'][i - 1];
+
+      cantCPar += impares[c - 'a'][n] - impares[c - 'a'][i];
+      cantCImpar += pares[c - 'a'][n] - pares[c - 'a'][i];
+
+      maxPar = max(maxPar, cantCPar);
+      maxImpar = max(maxImpar, cantCImpar);
+    }
+
+    int operaciones = n / 2 - maxPar + n / 2 - maxImpar;
+    minOp = min(operaciones, minOp);
+  }
+
+  cout << minOp + 1 << endl;
 }
 
 int main()

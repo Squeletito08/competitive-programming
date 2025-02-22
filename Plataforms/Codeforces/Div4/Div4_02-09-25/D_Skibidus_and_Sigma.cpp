@@ -50,6 +50,45 @@ constexpr int MOD = 1e9 + 7;
 
 void solve()
 {
+  int n, m;
+  cin >> n >> m;
+
+  vector<vll> mtz(n, vll(m, 0));
+
+  for (int i = 0; i < n; i++)
+  {
+    for (int j = 0; j < m; j++)
+    {
+      cin >> mtz[i][j];
+    }
+  }
+
+  vector<ll> sums;
+
+  ll total = 0;
+
+  for (int i = 0; i < n; i++)
+  {
+    ll aux = 0;
+    ll sum = 0;
+    for (int j = 0; j < m; j++)
+    {
+      aux += mtz[i][j];
+      sum += aux;
+    }
+
+    total += sum;
+    sums.pb(aux);
+  }
+
+  sort(all(sums), greater<ll>());
+
+  for (int i = 0; i < n; i++)
+  {
+    total += sums[i] * (n * m - (m * (i + 1)));
+  }
+
+  cout << total << endl;
 }
 
 int main()

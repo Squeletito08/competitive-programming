@@ -50,6 +50,38 @@ constexpr int MOD = 1e9 + 7;
 
 void solve()
 {
+  int n;
+  cin >> n;
+
+  int ctd0 = 0;
+  int ctd1 = 0;
+
+  for (int i = 0; i < n; i++)
+  {
+    int x;
+    cin >> x;
+    (x % 2 == 0) ? ctd0++ : ctd1++;
+  }
+
+  if (ctd1 == 2)
+  {
+    cout << "Bob" << endl;
+    return;
+  }
+
+  if (ctd1 == 1)
+  {
+    cout << (ctd0 % 2 != 0 ? "Alice" : "Bob") << endl;
+    return;
+  }
+
+  if (ctd1 % 2 == 0)
+  {
+    cout << "Alice" << endl;
+    return;
+  }
+
+  cout << "Alice" << endl;
 }
 
 int main()

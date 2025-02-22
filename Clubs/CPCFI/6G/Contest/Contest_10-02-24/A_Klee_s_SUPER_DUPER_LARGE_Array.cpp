@@ -48,8 +48,67 @@ constexpr ll INF_LL = LONG_LONG_MAX;
 constexpr int INF_INT = INT_MAX;
 constexpr int MOD = 1e9 + 7;
 
+ll value_a(ll k, ll i)
+{
+  return (k + i) * (k + i + 1) / 2;
+}
+
+ll value_b(ll k)
+{
+  return (k - 1) * k / 2;
+}
+
+ll value_c(ll k, ll i, ll n)
+{
+  return (k + n - 1) * (k + n) / 2;
+}
+
+ll from0_to_i(ll k, ll i, ll n)
+{
+  return value_a(k, i) - value_b(k);
+}
+
+ll from_i_to_n(ll k, ll i, ll n)
+{
+  return value_c(k, i, n) - value_a(k, i);
+}
+
+ll value(ll k, ll i, ll n)
+{
+  return abs(from0_to_i(k, i, n) - from_i_to_n(k, i, n));
+}
+
 void solve()
 {
+  ll n, k;
+  cin >> n >> k;
+
+  ll max_i = -INF_INT;
+
+  ll l = 0;
+  ll r = n - 1;
+
+  while (l <= r)
+  {
+    ll mid = l + (r - l) / 2;
+
+    ll x = from0_to_i(k, mid, n);
+    ll y = from_i_to_n(k, mid, n);
+
+    if (x <= y)
+    {
+      max_i = mid;
+      l = mid + 1;
+    }
+    else
+    {
+      r = mid - 1;
+    }
+  }
+
+  ll res = value(k, max_i, n);
+
+  cout << min(res, value(k, min(max_i + 1, n), n)) << endl;
 }
 
 int main()

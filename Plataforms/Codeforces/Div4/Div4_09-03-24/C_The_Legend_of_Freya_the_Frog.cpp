@@ -50,6 +50,26 @@ constexpr int MOD = 1e9 + 7;
 
 void solve()
 {
+  int x, y, k;
+  cin >> x >> y >> k;
+
+  int sx = x / k;
+  if (x % k != 0)
+    sx++;
+
+  int sy = y / k;
+  if (y % k != 0)
+    sy++;
+
+  if (sx == sy)
+  {
+    cout << 2 * sx << endl;
+    return;
+  }
+
+  // error(x, y);
+
+  cout << (sx > sy ? 2 * sx - 1 : 2 * sx + 2 * (sy - sx)) << endl;
 }
 
 int main()

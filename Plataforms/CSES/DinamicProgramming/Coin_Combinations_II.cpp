@@ -50,6 +50,28 @@ constexpr int MOD = 1e9 + 7;
 
 void solve()
 {
+  int n, x;
+  cin >> n >> x;
+
+  vi coins(n);
+  read_v(coins);
+
+  vi dp(x + 1, 0);
+  dp[0] = 1;
+
+  for (auto c : coins)
+  {
+    for (int i = 1; i <= x; i++)
+    {
+      if (i - c >= 0)
+      {
+        dp[i] += dp[i - c];
+        dp[i] %= MOD;
+      }
+    }
+  }
+
+  cout << dp[x] << endl;
 }
 
 int main()
@@ -58,7 +80,6 @@ int main()
   cin.tie(0);
 
   int t = 1;
-  cin >> t;
 
   for (tc = 1; tc <= t; tc++)
     solve();

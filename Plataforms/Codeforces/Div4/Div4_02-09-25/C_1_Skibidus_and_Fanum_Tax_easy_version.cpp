@@ -50,6 +50,61 @@ constexpr int MOD = 1e9 + 7;
 
 void solve()
 {
+  int n, m;
+  cin >> n >> m;
+
+  vi a_v(n);
+  read_v(a_v);
+
+  vi b_v(m);
+  read_v(b_v);
+
+  sort(all(b_v));
+  bool good = true;
+
+  a_v[0] = min(b_v[m - 1] - a_v[0], a_v[0]);
+
+  for (int i = 1; i < n; i++)
+  {
+
+    int l = 0;
+    int r = m - 1;
+
+    int val = -INF_INT;
+
+    while (l <= r)
+    {
+      int mid = l + (r - l) / 2;
+
+      int min_val = min(b_v[mid] - a_v[i], a_v[i]);
+      int max_val = max(b_v[mid] - a_v[i], a_v[i]);
+
+      if (min_val >= a_v[i - 1])
+      {
+        r = mid - 1;
+        val = min_val;
+      }
+      else if (max_val >= a_v[i - 1])
+      {
+        r = mid - 1;
+        val = max_val;
+      }
+      else
+      {
+        l = mid + 1;
+      }
+    }
+
+    if (val == -INF_INT)
+    {
+      cout << "NO" << endl;
+      return;
+    }
+
+    a_v[i] = val;
+  }
+
+  cout << "YES" << endl;
 }
 
 int main()

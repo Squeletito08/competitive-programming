@@ -50,6 +50,18 @@ constexpr int MOD = 1e9 + 7;
 
 void solve()
 {
+  int n;
+  cin >> n;
+  string s;
+  cin >> s;
+  transform(s.begin(), s.end(), s.begin(),
+            ::tolower);
+  s.erase(unique(all(s)), s.end());
+
+  if (sz(s) == 4 && s[0] == 'm' && s[1] == 'e' && s[2] == 'o' && s[3] == 'w')
+    cout << "YES" << endl;
+  else
+    cout << "NO" << endl;
 }
 
 int main()

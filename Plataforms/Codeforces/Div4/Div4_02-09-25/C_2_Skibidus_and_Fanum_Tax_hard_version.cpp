@@ -48,8 +48,69 @@ constexpr ll INF_LL = LONG_LONG_MAX;
 constexpr int INF_INT = INT_MAX;
 constexpr int MOD = 1e9 + 7;
 
+int bs(int l, int r, vi &b_v, int act, int ant)
+{
+  int ind = 0;
+
+  while (l <= r)
+  {
+    int mid = l + (r - l) / 2;
+
+    if (b_v[mid] - act >= ant)
+    {
+      r = mid - 1;
+      ind = mid;
+    }
+    else
+    {
+      l = mid + 1;
+    }
+  }
+
+  return ind;
+}
+
 void solve()
 {
+  int n, m;
+  cin >> n >> m;
+
+  vi a_v(n);
+  read_v(a_v);
+
+  vi b_v(m);
+  read_v(b_v);
+
+  sort(all(b_v));
+
+  int ind = bs(0, m - 1, b_v, a_v[0], -INF_INT);
+  a_v[0] = min(b_v[ind] - a_v[0], a_v[0]);
+
+  bool good = true;
+  for (int i = 1; i < n; i++)
+  {
+
+    int ind = bs(0, m - 1, b_v, a_v[i], a_v[i - 1]);
+
+    int val_min = min(b_v[ind] - a_v[i], a_v[i]);
+    int val_max = max(b_v[ind] - a_v[i], a_v[i]);
+
+    if (val_min >= a_v[i - 1])
+    {
+      a_v[i] = val_min;
+      continue;
+    }
+
+    if (val_max >= a_v[i - 1])
+    {
+      a_v[i] = val_max;
+      continue;
+    }
+
+    good = false;
+  }
+
+  cout << (good ? "YES" : "NO") << endl;
 }
 
 int main()

@@ -50,6 +50,28 @@ constexpr int MOD = 1e9 + 7;
 
 void solve()
 {
+  int n;
+  cin >> n;
+
+  vi nums(n);
+  read_v(nums);
+  sort(all(nums));
+  nums.erase(unique(all(nums)), nums.end());
+
+  int l = 0;
+
+  int res = 0;
+
+  for (int r = 0; r < sz(nums); r++)
+  {
+
+    while (nums[r] - nums[l] > n - 1)
+      l++;
+
+    res = max(res, r - l + 1);
+  }
+
+  cout << res << endl;
 }
 
 int main()

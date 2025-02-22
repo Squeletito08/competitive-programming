@@ -50,6 +50,42 @@ constexpr int MOD = 1e9 + 7;
 
 void solve()
 {
+  int n;
+  cin >> n;
+  vi nums(n);
+
+  int impares = 0;
+  int pares = 0;
+
+  int i_par = -1;
+  int i_impar = -1;
+
+  for (int i = 0; i < n; i++)
+  {
+    int x;
+    cin >> x;
+
+    if (x % 2 != 0)
+    {
+      i_impar = i + 1;
+      impares++;
+    }
+
+    if (x % 2 == 0)
+    {
+      i_par = i + 1;
+      pares++;
+    }
+  }
+
+  if (pares == n - 1)
+  {
+    cout << i_impar << endl;
+  }
+  else
+  {
+    cout << i_par << endl;
+  }
 }
 
 int main()
@@ -58,7 +94,6 @@ int main()
   cin.tie(0);
 
   int t = 1;
-  cin >> t;
 
   for (tc = 1; tc <= t; tc++)
     solve();

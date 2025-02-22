@@ -50,6 +50,55 @@ constexpr int MOD = 1e9 + 7;
 
 void solve()
 {
+  int n;
+  cin >> n;
+
+  vi nums(n);
+  read_v(nums);
+
+  string s;
+  cin >> s;
+  vi prefix(n + 1);
+
+  int x_0 = 0;
+  int x_1 = 0;
+
+  for (int i = 1; i <= n; i++)
+  {
+    prefix[i] = prefix[i - 1] ^ nums[i - 1];
+
+    if (s[i - 1] == '0')
+      x_0 ^= nums[i - 1];
+    else
+      x_1 ^= nums[i - 1];
+  }
+
+  int q;
+  cin >> q;
+
+  while (q--)
+  {
+    int op;
+    cin >> op;
+
+    if (op == 1)
+    {
+      int l, r;
+      cin >> l >> r;
+
+      x_0 ^= prefix[r] ^ prefix[l - 1];
+      x_1 ^= prefix[r] ^ prefix[l - 1];
+    }
+    else
+    {
+      char c;
+      cin >> c;
+
+      cout << (c == '0' ? x_0 : x_1) << " ";
+    }
+  }
+
+  cout << endl;
 }
 
 int main()

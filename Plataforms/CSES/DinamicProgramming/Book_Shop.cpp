@@ -50,6 +50,35 @@ constexpr int MOD = 1e9 + 7;
 
 void solve()
 {
+  int n, x;
+  cin >> n >> x;
+
+  vi wt(n + 1);
+  for (int i = 1; i <= n; i++)
+    cin >> wt[i];
+
+  vi val(n + 1);
+  for (int i = 1; i <= n; i++)
+    cin >> val[i];
+
+  vvi dp(n + 1, vi(x + 1, 0));
+
+  for (int i = 1; i <= n; i++)
+  {
+    for (int j = 0; j <= x; j++)
+    {
+      if (j < wt[i])
+      {
+        dp[i][j] = dp[i - 1][j];
+      }
+      else
+      {
+        dp[i][j] = max(val[i] + dp[i - 1][j - wt[i]], dp[i - 1][j]);
+      }
+    }
+  }
+
+  cout << dp[n][x] << endl;
 }
 
 int main()
@@ -58,7 +87,6 @@ int main()
   cin.tie(0);
 
   int t = 1;
-  cin >> t;
 
   for (tc = 1; tc <= t; tc++)
     solve();

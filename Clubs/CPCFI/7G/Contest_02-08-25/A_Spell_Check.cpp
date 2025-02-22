@@ -50,6 +50,17 @@ constexpr int MOD = 1e9 + 7;
 
 void solve()
 {
+  int n;
+  cin >> n;
+  string s;
+  cin >> s;
+
+  set<char> c(all(s));
+
+  if (n == 5 && c.count('T') && c.count('i') && c.count('m') && c.count('u') && c.count('r'))
+    cout << "YES" << endl;
+  else
+    cout << "NO" << endl;
 }
 
 int main()

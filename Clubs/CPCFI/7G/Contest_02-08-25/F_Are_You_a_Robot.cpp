@@ -50,6 +50,7 @@ constexpr int MOD = 1e9 + 7;
 
 void solve()
 {
+  cout << "security" << endl;
 }
 
 int main()
@@ -58,7 +59,6 @@ int main()
   cin.tie(0);
 
   int t = 1;
-  cin >> t;
 
   for (tc = 1; tc <= t; tc++)
     solve();

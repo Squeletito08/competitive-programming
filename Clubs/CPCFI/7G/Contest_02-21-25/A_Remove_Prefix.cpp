@@ -50,6 +50,35 @@ constexpr int MOD = 1e9 + 7;
 
 void solve()
 {
+  int n;
+  cin >> n;
+
+  map<int, int> m;
+  int res = INT_MIN;
+
+  for (int i = 0; i < n; i++)
+  {
+    int x;
+    cin >> x;
+
+    if (!m.count(x))
+    {
+      m[x] = i;
+    }
+    else
+    {
+      res = max(res, m[x]);
+      m[x] = i;
+    }
+  }
+
+  if (res == INT_MIN)
+  {
+    cout << 0 << endl;
+    return;
+  }
+
+  cout << res + 1 << endl;
 }
 
 int main()

@@ -50,6 +50,35 @@ constexpr int MOD = 1e9 + 7;
 
 void solve()
 {
+  int n;
+  cin >> n;
+
+  deque<int> dq;
+
+  int i = INT_MAX;
+  int j = INT_MIN;
+
+  for (int k = 0; k < n; k++)
+  {
+    int x;
+    cin >> x;
+
+    if (x < i)
+    {
+      dq.push_front(x);
+      i = x;
+    }
+    else
+    {
+      dq.pb(x);
+      j = x;
+    }
+  }
+
+  for (auto x : dq)
+    cout << x << " ";
+
+  cout << endl;
 }
 
 int main()

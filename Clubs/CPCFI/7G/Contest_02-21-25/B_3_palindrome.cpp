@@ -50,6 +50,26 @@ constexpr int MOD = 1e9 + 7;
 
 void solve()
 {
+  int n;
+  cin >> n;
+
+  string s = "";
+
+  bool a = true;
+  for (int i = 0; i < n / 2; i++)
+  {
+    if (i % 2 == 0)
+      s += "aa";
+    else
+      s += "bb";
+  }
+
+  if (n % 2 != 0)
+  {
+    s += (s[sz(s) - 1] == 'a' ? 'b' : 'a');
+  }
+
+  cout << s << endl;
 }
 
 int main()
@@ -58,7 +78,6 @@ int main()
   cin.tie(0);
 
   int t = 1;
-  cin >> t;
 
   for (tc = 1; tc <= t; tc++)
     solve();

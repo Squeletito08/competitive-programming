@@ -48,17 +48,48 @@ constexpr ll INF_LL = LONG_LONG_MAX;
 constexpr int INF_INT = INT_MAX;
 constexpr int MOD = 1e9 + 7;
 
+vll cards;
+
 void solve()
 {
+  ll n;
+  cin >> n;
+
+  ll ctd = 0;
+
+  while (n >= 2)
+  {
+    auto it = lower_bound(all(cards), n);
+    ctd++;
+
+    if (it == cards.end() || *it > n)
+      it--;
+    error(n, *it);
+    n -= *it;
+  }
+
+  cout << ctd << endl;
 }
 
 int main()
 {
   ios_base::sync_with_stdio(0);
   cin.tie(0);
+  cout.tie(0);
 
   int t = 1;
   cin >> t;
+
+  cards.pb(2);
+  int i = 2;
+  ll num = 2;
+
+  while (num <= 1e9)
+  {
+    cards.pb(num);
+    num = 3 * i + cards[i - 1] - 1;
+    i++;
+  }
 
   for (tc = 1; tc <= t; tc++)
     solve();

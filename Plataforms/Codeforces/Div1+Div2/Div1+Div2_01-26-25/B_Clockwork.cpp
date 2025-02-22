@@ -50,6 +50,27 @@ constexpr int MOD = 1e9 + 7;
 
 void solve()
 {
+  int n;
+  cin >> n;
+
+  vi nums(n);
+
+  read_v(nums);
+
+  for (int i = 0; i < n; i++)
+  {
+    if (nums[i] > 2 * (n - i - 1) && nums[i] > 2 * i)
+    {
+      continue;
+    }
+    else
+    {
+      cout << "NO" << endl;
+      return;
+    }
+  }
+
+  cout << "YES" << endl;
 }
 
 int main()

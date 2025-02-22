@@ -50,6 +50,28 @@ constexpr int MOD = 1e9 + 7;
 
 void solve()
 {
+  int n;
+  cin >> n;
+
+  vi nums(n + 1);
+  for (int i = 1; i <= n; i++)
+    cin >> nums[i];
+
+  vvi dp(n + 2, vi(n + 2, INF_INT));
+
+  for (int k = 2; k <= n; k++)
+    for (int i = 1; i <= n - k + 1; i++)
+      dp[i][i + k - 1] = min({dp[i][i + k - 2], dp[i + 1][i + k - 1], abs(nums[i] - nums[i + k - 1])});
+
+  int q;
+  cin >> q;
+
+  while (q--)
+  {
+    int l, r;
+    cin >> l >> r;
+    cout << dp[l][r] << endl;
+  }
 }
 
 int main()
@@ -58,7 +80,6 @@ int main()
   cin.tie(0);
 
   int t = 1;
-  cin >> t;
 
   for (tc = 1; tc <= t; tc++)
     solve();

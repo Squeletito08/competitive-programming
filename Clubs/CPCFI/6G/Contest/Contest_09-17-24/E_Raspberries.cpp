@@ -50,6 +50,40 @@ constexpr int MOD = 1e9 + 7;
 
 void solve()
 {
+  int n, k;
+  cin >> n >> k;
+
+  int dif = INF_INT;
+
+  int ctd2 = 0;
+  int ctd1 = 0;
+
+  for (int i = 0; i < n; i++)
+  {
+    int x;
+    cin >> x;
+
+    if (x % k == 2)
+      ctd2++;
+
+    if (x % k == 1)
+      ctd1++;
+
+    dif = min(dif, (k - (x % k)) % k);
+  }
+
+  if (k == 4)
+  {
+    if (ctd2 >= 2)
+      dif = min(dif, 0);
+
+    if (ctd2 >= 1 && ctd1 >= 1)
+      dif = min(dif, 1);
+
+    if (ctd1 >= 2)
+      dif = min(dif, 2);
+  }
+  cout << dif << endl;
 }
 
 int main()

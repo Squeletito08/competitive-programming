@@ -50,6 +50,31 @@ constexpr int MOD = 1e9 + 7;
 
 void solve()
 {
+  int n, q;
+  cin >> n >> q;
+
+  vi nums(n);
+  read_v(nums);
+
+  vi prefix_max(n);
+  vll prefix_sum(n + 1);
+  prefix_max[0] = nums[0];
+  for (int i = 1; i < n; i++)
+    prefix_max[i] = max(nums[i], prefix_max[i - 1]);
+
+  for (int i = 1; i <= n; i++)
+    prefix_sum[i] = prefix_sum[i - 1] + nums[i - 1];
+
+  while (q--)
+  {
+    int x;
+    cin >> x;
+
+    int i = distance(prefix_max.begin(), upper_bound(all(prefix_max), x));
+    cout << prefix_sum[i] << " ";
+  }
+
+  cout << endl;
 }
 
 int main()

@@ -50,12 +50,58 @@ constexpr int MOD = 1e9 + 7;
 
 void solve()
 {
+  ll n, l, r;
+  cin >> n >> l >> r;
+
+  vll cards(n);
+  read_v(cards);
+
+  vll pref(n + 1);
+  for (int i = 1; i <= n; i++)
+    pref[i] += pref[i - 1] + cards[i - 1];
+
+  ll ctd = 0;
+
+  for (int i = 1; i <= n; i++)
+  {
+
+    ll l_aux = i;
+    ll r_aux = n;
+
+    ll rest = pref[i - 1];
+
+    ll res = -1;
+    while (l_aux <= r_aux)
+    {
+      ll mid = (l_aux + r_aux) / 2;
+
+      if (pref[mid] - rest >= l)
+      {
+        res = mid;
+        r_aux = mid - 1;
+      }
+      else
+      {
+        l_aux = mid + 1;
+      }
+
+      error(l_aux, r_aux, rest, res);
+    }
+
+    if (res == -1 || pref[res] - rest > r)
+      continue;
+
+    ctd++;
+    i = res;
+  }
+  cout << ctd << endl;
 }
 
 int main()
 {
   ios_base::sync_with_stdio(0);
   cin.tie(0);
+  cout.tie(0);
 
   int t = 1;
   cin >> t;

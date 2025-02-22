@@ -50,6 +50,40 @@ constexpr int MOD = 1e9 + 7;
 
 void solve()
 {
+  int n, q;
+  cin >> n >> q;
+
+  ll max_val = -INF_LL;
+
+  for (int i = 0; i < n; i++)
+  {
+    ll x;
+    cin >> x;
+    max_val = max(max_val, x);
+  }
+
+  while (q--)
+  {
+    char c;
+    cin >> c;
+
+    ll l, r;
+    cin >> l >> r;
+
+    if (max_val >= l && max_val <= r && c == '+')
+    {
+      max_val++;
+    }
+
+    if (max_val >= l && max_val <= r && c == '-')
+    {
+      max_val--;
+    }
+
+    cout << max_val << " ";
+  }
+
+  cout << endl;
 }
 
 int main()

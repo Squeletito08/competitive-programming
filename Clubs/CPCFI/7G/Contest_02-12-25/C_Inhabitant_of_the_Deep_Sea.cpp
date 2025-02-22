@@ -50,6 +50,49 @@ constexpr int MOD = 1e9 + 7;
 
 void solve()
 {
+  ll n, k;
+  cin >> n >> k;
+  vll nums(n);
+  read_v(nums);
+
+  int i = 0;
+  int j = n - 1;
+  int ctd = 0;
+
+  while (i < j && k)
+  {
+    ll m = min(nums[i], nums[j]);
+
+    if (k < 2 * m)
+    {
+      nums[i] -= k / 2 + k % 2;
+      nums[j] -= k / 2;
+      k = 0;
+    }
+    else
+    {
+      nums[i] -= m;
+      nums[j] -= m;
+      k -= 2 * m;
+    }
+
+    if (nums[i] == 0)
+    {
+      i++;
+      ctd++;
+    }
+
+    if (nums[j] == 0)
+    {
+      j--;
+      ctd++;
+    }
+  }
+
+  if (i == j && k >= nums[i])
+    ctd++;
+
+  cout << ctd << endl;
 }
 
 int main()

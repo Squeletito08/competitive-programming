@@ -50,15 +50,35 @@ constexpr int MOD = 1e9 + 7;
 
 void solve()
 {
+  int n;
+  cin >> n;
+  vll nums(n);
+  vll pref(n + 1);
+  for (int i = 0; i < n; i++)
+  {
+    cin >> nums[i];
+    pref[i + 1] = pref[i] + nums[i];
+  }
+
+  int q;
+  cin >> q;
+
+  while (q--)
+  {
+    ll x;
+    cin >> x;
+
+    cout << distance(pref.begin(), lower_bound(all(pref), x)) << endl;
+  }
 }
 
 int main()
 {
   ios_base::sync_with_stdio(0);
   cin.tie(0);
+  cout.tie(0);
 
   int t = 1;
-  cin >> t;
 
   for (tc = 1; tc <= t; tc++)
     solve();

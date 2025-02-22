@@ -50,6 +50,34 @@ constexpr int MOD = 1e9 + 7;
 
 void solve()
 {
+  int n;
+  cin >> n;
+
+  vi a(n);
+  read_v(a);
+
+  map<char, int> ocurrencias;
+  for (char c = 'a'; c <= 'z'; c++)
+    ocurrencias[c] = 0;
+
+  vector<char> res(n);
+
+  for (int i = 0; i < n; i++)
+  {
+    for (auto [c, val] : ocurrencias)
+    {
+      if (a[i] == val)
+      {
+        res[i] = c;
+        ocurrencias[c]++;
+        break;
+      }
+    }
+  }
+
+  for (auto c : res)
+    cout << c;
+  cout << endl;
 }
 
 int main()

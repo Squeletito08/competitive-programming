@@ -50,6 +50,9 @@ constexpr int MOD = 1e9 + 7;
 
 void solve()
 {
+  int a, b;
+  cin >> a >> b;
+  cout << b - a << endl;
 }
 
 int main()

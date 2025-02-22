@@ -50,6 +50,44 @@ constexpr int MOD = 1e9 + 7;
 
 void solve()
 {
+  string s;
+  cin >> s;
+
+  unordered_map<char, char> aux = {{'<', '>'}, {'{', '}'}, {'[', ']'}, {'(', ')'}};
+
+  stack<char> brak;
+
+  int ctd = 0;
+  for (int i = 0; i < sz(s); i++)
+  {
+
+    if (s[i] == '<' || s[i] == '{' || s[i] == '[' || s[i] == '(')
+    {
+      brak.push(s[i]);
+    }
+    else
+    {
+      if (brak.empty())
+      {
+        cout << "Impossible" << endl;
+        return;
+      }
+
+      if (aux[brak.top()] != s[i])
+      {
+        ctd++;
+      }
+      brak.pop();
+    }
+  }
+
+  if (!brak.empty())
+  {
+    cout << "Impossible" << endl;
+    return;
+  }
+
+  cout << ctd << endl;
 }
 
 int main()
@@ -58,7 +96,6 @@ int main()
   cin.tie(0);
 
   int t = 1;
-  cin >> t;
 
   for (tc = 1; tc <= t; tc++)
     solve();

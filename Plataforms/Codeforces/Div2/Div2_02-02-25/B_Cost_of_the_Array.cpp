@@ -50,6 +50,42 @@ constexpr int MOD = 1e9 + 7;
 
 void solve()
 {
+  int n, k;
+  cin >> n >> k;
+
+  vi a(n);
+  read_v(a);
+
+  if (n == k)
+  {
+    int ctd = 1;
+
+    for (int i = 1; i < n; i += 2)
+    {
+      if (a[i] != ctd)
+      {
+        cout << ctd << endl;
+        return;
+      }
+      ctd++;
+    }
+
+    cout << ctd << endl;
+    return;
+  }
+
+  int k_max = n - (k - 1);
+
+  for (int i = 1; i <= k_max; i++)
+  {
+    if (a[i] != 1)
+    {
+      cout << 1 << endl;
+      return;
+    }
+  }
+
+  cout << 2 << endl;
 }
 
 int main()

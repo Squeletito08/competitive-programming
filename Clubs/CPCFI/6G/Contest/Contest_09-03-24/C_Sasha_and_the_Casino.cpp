@@ -50,12 +50,32 @@ constexpr int MOD = 1e9 + 7;
 
 void solve()
 {
+  ll k, x, a;
+  cin >> k >> x >> a;
+
+  ll m = 0;
+  ll nec = 0;
+  for (ll i = 0; i < x; i++)
+  {
+    nec = m / (k - 1) + 1;
+    m += nec;
+    if (m > a)
+    {
+      cout << "NO" << endl;
+      return;
+    }
+  }
+
+  nec = m / (k - 1) + 1;
+
+  cout << (((a - m) >= nec) ? "YES" : "NO") << endl;
 }
 
 int main()
 {
   ios_base::sync_with_stdio(0);
   cin.tie(0);
+  cout.tie(0);
 
   int t = 1;
   cin >> t;

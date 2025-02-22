@@ -50,6 +50,35 @@ constexpr int MOD = 1e9 + 7;
 
 void solve()
 {
+  string s, t;
+  cin >> s >> t;
+
+  int n = sz(s);
+  int m = sz(t);
+
+  for (int k = 1; k <= n; k++)
+  {
+    for (int i = 0; i < n - k + 1; i++)
+    {
+      string ss = s.substr(i, k);
+
+      int j = (i + k - 1) - (m - k);
+
+      if (ss != t.substr(0, k) || j < 0)
+        continue;
+
+      string sss = s.substr(j, m - k);
+      reverse(all(sss));
+
+      if (sss == t.substr(k, m))
+      {
+        cout << "YES" << endl;
+        return;
+      }
+    }
+  }
+
+  cout << "NO" << endl;
 }
 
 int main()

@@ -50,6 +50,24 @@ constexpr int MOD = 1e9 + 7;
 
 void solve()
 {
+  string s;
+  cin >> s;
+
+  int n = sz(s);
+
+  if (n == 1)
+  {
+    cout << "i" << endl;
+    return;
+  }
+
+  s[n - 2] = 'i';
+
+  for (int i = 0; i <= n - 2; i++)
+  {
+    cout << s[i];
+  }
+  cout << endl;
 }
 
 int main()

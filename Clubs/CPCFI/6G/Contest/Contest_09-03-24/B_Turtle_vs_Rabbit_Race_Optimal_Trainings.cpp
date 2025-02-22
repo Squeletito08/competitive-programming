@@ -48,14 +48,66 @@ constexpr ll INF_LL = LONG_LONG_MAX;
 constexpr int INF_INT = INT_MAX;
 constexpr int MOD = 1e9 + 7;
 
+ll val_max(ll u, ll l, ll r, vll &prefix, ll rest)
+{
+
+  // ll target = u + rest;
+  // auto it = lower_bound(prefix.begin() + l, prefix.begin() + r + 1, target);
+
+  ll target = u;
+  auto it = lower_bound(prefix.begin() + l, prefix.begin() + r + 1, target, [&](ll value, ll target)
+                        { return (value - rest) < target; });
+
+  ll ind = it - prefix.begin();
+
+  ll curr = prefix[ind] - rest;
+
+  if (ind > l)
+  {
+    ll ant = prefix[ind - 1] - rest;
+
+    curr = u * curr - (curr * (curr - 1)) / 2;
+    ant = u * ant - (ant * (ant - 1)) / 2;
+
+    if (ant >= curr)
+      ind = max(1ll, ind - 1);
+  }
+
+  return ind;
+}
+
 void solve()
 {
+  int n;
+  cin >> n;
+  vll nums(n);
+  vll prefix(n + 1);
+  for (int i = 0; i < n; i++)
+  {
+    cin >> nums[i];
+    prefix[i + 1] = prefix[i] + nums[i];
+  }
+
+  int q;
+  cin >> q;
+
+  while (q--)
+  {
+    ll l, u;
+    cin >> l >> u;
+
+    ll ind = val_max(u, l, n, prefix, prefix[l - 1]);
+    cout << ind << " ";
+  }
+
+  cout << endl;
 }
 
 int main()
 {
   ios_base::sync_with_stdio(0);
   cin.tie(0);
+  cout.tie(0);
 
   int t = 1;
   cin >> t;
