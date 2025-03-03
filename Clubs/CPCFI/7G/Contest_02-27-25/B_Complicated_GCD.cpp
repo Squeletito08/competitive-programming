@@ -50,38 +50,16 @@ constexpr int MOD = 1e9 + 7;
 
 void solve()
 {
-  int n;
-  cin >> n;
+  string a, b;
+  cin >> a >> b;
 
-  int ctd = 0;
-  int s1 = INT_MAX;
-  int s2 = INT_MAX;
-  for (int i = 0; i < n; i++)
+  if (a == b)
   {
-    int x;
-    cin >> x;
-
-    if (s2 < s1)
-    {
-      swap(s1, s2);
-    }
-
-    if (x <= s1)
-    {
-      s1 = x;
-    }
-    else if (x <= s2)
-    {
-      s2 = x;
-    }
-    else
-    {
-      ctd++;
-      s1 = x;
-    }
+    cout << a << endl;
+    return;
   }
 
-  cout << ctd << endl;
+  cout << "1" << endl;
 }
 
 int main()
@@ -90,7 +68,6 @@ int main()
   cin.tie(0);
 
   int t = 1;
-  cin >> t;
 
   for (tc = 1; tc <= t; tc++)
     solve();

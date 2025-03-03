@@ -50,38 +50,23 @@ constexpr int MOD = 1e9 + 7;
 
 void solve()
 {
-  int n;
-  cin >> n;
+  string s;
+  cin >> s;
 
-  int ctd = 0;
-  int s1 = INT_MAX;
-  int s2 = INT_MAX;
-  for (int i = 0; i < n; i++)
+  string aux = s;
+  sort(all(aux));
+
+  do
   {
-    int x;
-    cin >> x;
+    if (aux != s)
+    {
+      cout << "YES" << endl;
+      cout << aux << endl;
+      return;
+    }
+  } while (next_permutation(all(aux)));
 
-    if (s2 < s1)
-    {
-      swap(s1, s2);
-    }
-
-    if (x <= s1)
-    {
-      s1 = x;
-    }
-    else if (x <= s2)
-    {
-      s2 = x;
-    }
-    else
-    {
-      ctd++;
-      s1 = x;
-    }
-  }
-
-  cout << ctd << endl;
+  cout << "NO" << endl;
 }
 
 int main()

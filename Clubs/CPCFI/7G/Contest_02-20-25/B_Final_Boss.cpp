@@ -48,40 +48,54 @@ constexpr ll INF_LL = LONG_LONG_MAX;
 constexpr int INF_INT = INT_MAX;
 constexpr int MOD = 1e9 + 7;
 
+bool good(vll &a, vll &c, ll k, ll h)
+{
+
+  ll res = 0;
+  for (int i = 0; i < sz(a) && res < h; i++)
+  {
+    ll ctd = (k / c[i]) + 1;
+
+    if (ctd >= h)
+    {
+      return true;
+    }
+
+    res += a[i] * ctd;
+  }
+
+  return res >= h;
+}
+
 void solve()
 {
-  int n;
-  cin >> n;
+  ll h, n;
+  cin >> h >> n;
+  vll a(n);
+  read_v(a);
+  vll c(n);
+  read_v(c);
 
-  int ctd = 0;
-  int s1 = INT_MAX;
-  int s2 = INT_MAX;
-  for (int i = 0; i < n; i++)
+  ll l = 1;
+  ll r = 1e13;
+
+  ll res = INF_LL;
+  while (l <= r)
   {
-    int x;
-    cin >> x;
+    ll mid = (l + r) / 2;
 
-    if (s2 < s1)
+    if (good(a, c, mid - 1, h))
     {
-      swap(s1, s2);
-    }
-
-    if (x <= s1)
-    {
-      s1 = x;
-    }
-    else if (x <= s2)
-    {
-      s2 = x;
+      res = min(res, mid);
+      r = mid - 1;
     }
     else
     {
-      ctd++;
-      s1 = x;
+      l = mid + 1;
     }
   }
 
-  cout << ctd << endl;
+  cout << res << endl;
 }
 
 int main()

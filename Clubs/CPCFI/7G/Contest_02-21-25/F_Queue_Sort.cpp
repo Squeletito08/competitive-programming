@@ -53,35 +53,28 @@ void solve()
   int n;
   cin >> n;
 
-  int ctd = 0;
-  int s1 = INT_MAX;
-  int s2 = INT_MAX;
+  vi nums(n);
+  read_v(nums);
+
+  int m = INT_MAX;
+  int j = 0;
+
   for (int i = 0; i < n; i++)
   {
-    int x;
-    cin >> x;
-
-    if (s2 < s1)
+    if (nums[i] < m)
     {
-      swap(s1, s2);
-    }
-
-    if (x <= s1)
-    {
-      s1 = x;
-    }
-    else if (x <= s2)
-    {
-      s2 = x;
-    }
-    else
-    {
-      ctd++;
-      s1 = x;
+      m = nums[i];
+      j = i;
     }
   }
 
-  cout << ctd << endl;
+  if (!is_sorted(nums.begin() + j, nums.end()))
+  {
+    cout << -1 << endl;
+    return;
+  }
+
+  cout << j << endl;
 }
 
 int main()

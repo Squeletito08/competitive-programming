@@ -48,40 +48,110 @@ constexpr ll INF_LL = LONG_LONG_MAX;
 constexpr int INF_INT = INT_MAX;
 constexpr int MOD = 1e9 + 7;
 
-void solve()
+ll powmod(ll base, ll exp)
 {
-  int n;
-  cin >> n;
-
-  int ctd = 0;
-  int s1 = INT_MAX;
-  int s2 = INT_MAX;
-  for (int i = 0; i < n; i++)
+  base %= MOD;
+  ll res = 1;
+  while (exp > 0)
   {
-    int x;
-    cin >> x;
-
-    if (s2 < s1)
+    if (exp & 1)
     {
-      swap(s1, s2);
+      res = (res * base) % MOD;
     }
-
-    if (x <= s1)
-    {
-      s1 = x;
-    }
-    else if (x <= s2)
-    {
-      s2 = x;
-    }
-    else
-    {
-      ctd++;
-      s1 = x;
-    }
+    base = (base * base) % MOD;
+    exp >>= 1;
   }
 
-  cout << ctd << endl;
+  return res;
+}
+
+ll inverse_mod(ll x)
+{
+  return powmod(x, MOD - 2);
+}
+
+ll factorial(ll n)
+{
+  ll res = 1;
+
+  while (n > 1)
+  {
+    res = (res * powmod(MOD - 1, n / MOD)) % MOD;
+    for (int i = 2; i <= n % MOD; ++i)
+    {
+      res = (res * i) % MOD;
+    }
+    n /= MOD;
+  }
+
+  return res % MOD;
+}
+
+void solve()
+{
+  int n, k;
+  cin >> n >> k;
+
+  vi nums(n);
+  read_v(nums);
+
+  map<int, int> aux;
+  for (int i = 0; i < n; i++)
+  {
+    aux[nums[i]]++;
+  }
+
+  ll p = n - aux.size() + 1;
+
+  ll q = inverse_mod(factorial(n));
+
+  cout << (p * q) % MOD << endl;
+
+  while (k--)
+  {
+    int a, b;
+    cin >> a >> b;
+    a--;
+
+    // cout << "anttes map -> " << endl;
+
+    // for (auto [x, v] : aux)
+    // {
+    //   cout << x << ", " << v << endl;
+    // }
+
+    aux[nums[a]]--;
+    aux[b]++;
+
+    if (aux[nums[a]] == 0)
+    {
+      aux.erase(nums[a]);
+    }
+
+    // cout << "map -> " << endl;
+
+    // for (auto [x, v] : aux)
+    // {
+    //   cout << x << ", " << v << endl;
+    // }
+
+    // cout << "aux.size -> " << aux.size() << endl;
+
+    nums[a] = b;
+
+    p = n - aux.size() + 1;
+
+    // error(p, q);
+
+    if (p == n)
+    {
+      cout << 1 << endl;
+      continue;
+    }
+
+    cout
+        << (p % MOD * q % MOD) % MOD << endl;
+  }
 }
 
 int main()
@@ -90,7 +160,6 @@ int main()
   cin.tie(0);
 
   int t = 1;
-  cin >> t;
 
   for (tc = 1; tc <= t; tc++)
     solve();

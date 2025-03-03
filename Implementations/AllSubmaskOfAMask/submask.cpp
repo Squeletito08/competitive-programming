@@ -50,38 +50,26 @@ constexpr int MOD = 1e9 + 7;
 
 void solve()
 {
-  int n;
-  cin >> n;
+  int mask;
+  cin >> mask;
+  bitset<8> bs(mask);
 
-  int ctd = 0;
-  int s1 = INT_MAX;
-  int s2 = INT_MAX;
-  for (int i = 0; i < n; i++)
+  cout << "Mascara original: " << endl
+       << bs << endl;
+  cout << "Submascaras: " << endl;
+  for (int s = mask;; s = (s - 1) & mask)
   {
-    int x;
-    cin >> x;
-
-    if (s2 < s1)
+    if (s == 0)
     {
-      swap(s1, s2);
+      cout << "s -> " << s << endl;
+      bitset<8> aux(s);
+      cout << aux << endl;
+      break;
     }
-
-    if (x <= s1)
-    {
-      s1 = x;
-    }
-    else if (x <= s2)
-    {
-      s2 = x;
-    }
-    else
-    {
-      ctd++;
-      s1 = x;
-    }
+    cout << "s -> " << s << endl;
+    bitset<8> aux(s);
+    cout << aux << endl;
   }
-
-  cout << ctd << endl;
 }
 
 int main()
@@ -90,7 +78,6 @@ int main()
   cin.tie(0);
 
   int t = 1;
-  cin >> t;
 
   for (tc = 1; tc <= t; tc++)
     solve();

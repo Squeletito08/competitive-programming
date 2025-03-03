@@ -53,35 +53,25 @@ void solve()
   int n;
   cin >> n;
 
-  int ctd = 0;
-  int s1 = INT_MAX;
-  int s2 = INT_MAX;
+  set<string> aux;
+
   for (int i = 0; i < n; i++)
   {
-    int x;
-    cin >> x;
+    string s;
+    cin >> s;
 
-    if (s2 < s1)
+    if (aux.empty() || !aux.count(s))
     {
-      swap(s1, s2);
-    }
-
-    if (x <= s1)
-    {
-      s1 = x;
-    }
-    else if (x <= s2)
-    {
-      s2 = x;
+      cout << "NO";
     }
     else
     {
-      ctd++;
-      s1 = x;
+      cout << "YES";
     }
-  }
 
-  cout << ctd << endl;
+    aux.insert(s);
+    cout << endl;
+  }
 }
 
 int main()
@@ -90,7 +80,6 @@ int main()
   cin.tie(0);
 
   int t = 1;
-  cin >> t;
 
   for (tc = 1; tc <= t; tc++)
     solve();

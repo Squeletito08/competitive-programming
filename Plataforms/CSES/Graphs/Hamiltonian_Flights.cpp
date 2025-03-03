@@ -50,38 +50,46 @@ constexpr int MOD = 1e9 + 7;
 
 void solve()
 {
-  int n;
-  cin >> n;
+  int n, m;
+  cin >> n >> m;
 
-  int ctd = 0;
-  int s1 = INT_MAX;
-  int s2 = INT_MAX;
-  for (int i = 0; i < n; i++)
+  vvi graph(n);
+
+  for (int i = 0; i < m; i++)
   {
-    int x;
-    cin >> x;
+    int u, v;
+    cin >> u >> v;
+    graph[--v].pb(--u);
+  }
 
-    if (s2 < s1)
-    {
-      swap(s1, s2);
-    }
+  vvi dp((1 << n), vi(n, 0));
 
-    if (x <= s1)
+  dp[1][0] = 1;
+
+  for (int mask = 2; mask < (1 << n); mask++)
+  {
+    if (!(mask & 1))
+      continue;
+
+    for (int i = 0; i < n; i++)
     {
-      s1 = x;
-    }
-    else if (x <= s2)
-    {
-      s2 = x;
-    }
-    else
-    {
-      ctd++;
-      s1 = x;
+
+      if (!(mask & (1 << i)))
+        continue;
+
+      int mask_ant = mask - (1 << i);
+      for (int j : graph[i])
+      {
+        if (!(mask & (1 << j)))
+          continue;
+
+        dp[mask][i] += dp[mask_ant][j];
+        dp[mask][i] %= MOD;
+      }
     }
   }
 
-  cout << ctd << endl;
+  cout << dp[(1 << n) - 1][n - 1] << endl;
 }
 
 int main()
@@ -90,7 +98,6 @@ int main()
   cin.tie(0);
 
   int t = 1;
-  cin >> t;
 
   for (tc = 1; tc <= t; tc++)
     solve();

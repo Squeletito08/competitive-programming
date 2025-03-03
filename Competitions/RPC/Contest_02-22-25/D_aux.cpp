@@ -48,40 +48,75 @@ constexpr ll INF_LL = LONG_LONG_MAX;
 constexpr int INF_INT = INT_MAX;
 constexpr int MOD = 1e9 + 7;
 
-void solve()
+#define fore(i, a, b) for (int i = a, ThxDem = b; i < ThxDem; ++i)
+
+int res = 0;
+
+vector<int> kmppre(string &t)
 {
-  int n;
-  cin >> n;
-
-  int ctd = 0;
-  int s1 = INT_MAX;
-  int s2 = INT_MAX;
-  for (int i = 0; i < n; i++)
+  vector<int> r(t.size() + 1);
+  r[0] = -1;
+  int j = -1;
+  fore(i, 0, t.size())
   {
-    int x;
-    cin >> x;
+    while (j >= 0 && t[i] != t[j])
+      j = r[j];
+    r[i + 1] = ++j;
+  }
+  return r;
+}
+int kmp(string &s, string &t)
+{
 
-    if (s2 < s1)
-    {
-      swap(s1, s2);
-    }
-
-    if (x <= s1)
-    {
-      s1 = x;
-    }
-    else if (x <= s2)
-    {
-      s2 = x;
-    }
-    else
-    {
-      ctd++;
-      s1 = x;
-    }
+  int res = 0;
+  int j = 0;
+  vector<int> b = kmppre(t);
+  fore(i, 0, s.size())
+  {
+    while (j >= 0 && s[i] != t[j])
+      j = b[j];
+    if (++j == t.size())
+      res++;
   }
 
-  cout << ctd << endl;
+  return res;
+}
+
+void solve()
+{
+  int m, n;
+  cin >> m >> n;
+
+  vi diff_m, diff_n;
+
+  string pattern = "", text = "";
+
+  int ant;
+  cin >> ant;
+  for (int i = 1; i < m; i++)
+  {
+    int act;
+    cin >> act;
+    pattern += to_string(act - ant);
+
+    ant = act;
+  }
+
+  pattern += "x";
+  cin >> ant;
+  for (int i = 1; i < n; i++)
+  {
+    int act;
+    cin >> act;
+    text += to_string(act - ant);
+    ;
+    ant = act;
+  }
+
+  // cout << "pattern -> " << pattern << endl;
+  // cout << "text -> " << text << endl;
+
+  cout << kmp(text, pattern) << endl;
 }
 
 int main()
@@ -90,7 +125,6 @@ int main()
   cin.tie(0);
 
   int t = 1;
-  cin >> t;
 
   for (tc = 1; tc <= t; tc++)
     solve();

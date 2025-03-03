@@ -53,35 +53,38 @@ void solve()
   int n;
   cin >> n;
 
-  int ctd = 0;
-  int s1 = INT_MAX;
-  int s2 = INT_MAX;
-  for (int i = 0; i < n; i++)
+  vector<vector<string>> cadenas(3, vector<string>(n, ""));
+
+  map<string, int> aux;
+
+  for (int i = 0; i < 3; i++)
   {
-    int x;
-    cin >> x;
-
-    if (s2 < s1)
+    for (int j = 0; j < n; j++)
     {
-      swap(s1, s2);
-    }
-
-    if (x <= s1)
-    {
-      s1 = x;
-    }
-    else if (x <= s2)
-    {
-      s2 = x;
-    }
-    else
-    {
-      ctd++;
-      s1 = x;
+      cin >> cadenas[i][j];
+      aux[cadenas[i][j]]++;
     }
   }
 
-  cout << ctd << endl;
+  for (int i = 0; i < 3; i++)
+  {
+    int total = 0;
+    for (int j = 0; j < n; j++)
+    {
+      if (aux[cadenas[i][j]] == 1)
+      {
+        total += 3;
+      }
+      else if (aux[cadenas[i][j]] == 2)
+      {
+        total += 1;
+      }
+    }
+
+    cout << total << " ";
+  }
+
+  cout << endl;
 }
 
 int main()

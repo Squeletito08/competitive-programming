@@ -48,40 +48,55 @@ constexpr ll INF_LL = LONG_LONG_MAX;
 constexpr int INF_INT = INT_MAX;
 constexpr int MOD = 1e9 + 7;
 
+ll lcm(ll a, ll b)
+{
+  return a / gcd(a, b) * b;
+}
+
 void solve()
 {
-  int n;
-  cin >> n;
+  ll n, x;
+  cin >> n >> x;
 
-  int ctd = 0;
-  int s1 = INT_MAX;
-  int s2 = INT_MAX;
-  for (int i = 0; i < n; i++)
+  vll nums(n);
+  read_v(nums);
+
+  ll res = 0;
+
+  for (int i = 1; i < (1 << n); i++)
   {
-    int x;
-    cin >> x;
+    ll d = 0;
+    ll k = 1;
+    bool can = 1;
+    for (int j = 0; j < n; j++)
+    {
+      if (i & (1 << j))
+      {
+        d++;
+        k = (lcm(k, nums[j]));
 
-    if (s2 < s1)
-    {
-      swap(s1, s2);
+        if (k > 1LL * x)
+        {
+          can = 0;
+          break;
+        }
+      }
     }
 
-    if (x <= s1)
+    if (can)
     {
-      s1 = x;
-    }
-    else if (x <= s2)
-    {
-      s2 = x;
-    }
-    else
-    {
-      ctd++;
-      s1 = x;
+      if (d & 1)
+      {
+        res += x / k;
+      }
+      else
+      {
+        res -= x / k;
+      }
     }
   }
 
-  cout << ctd << endl;
+  cout << res << endl;
 }
 
 int main()
@@ -90,7 +105,6 @@ int main()
   cin.tie(0);
 
   int t = 1;
-  cin >> t;
 
   for (tc = 1; tc <= t; tc++)
     solve();

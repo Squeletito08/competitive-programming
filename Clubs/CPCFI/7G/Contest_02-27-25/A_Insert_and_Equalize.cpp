@@ -48,40 +48,62 @@ constexpr ll INF_LL = LONG_LONG_MAX;
 constexpr int INF_INT = INT_MAX;
 constexpr int MOD = 1e9 + 7;
 
+ll lcm_f(ll a, ll b)
+{
+  return abs(a / gcd(a, b) * b);
+}
+
 void solve()
 {
   int n;
   cin >> n;
+  ll m = INT_MIN;
 
-  int ctd = 0;
-  int s1 = INT_MAX;
-  int s2 = INT_MAX;
+  vll nums(n);
   for (int i = 0; i < n; i++)
   {
-    int x;
-    cin >> x;
-
-    if (s2 < s1)
-    {
-      swap(s1, s2);
-    }
-
-    if (x <= s1)
-    {
-      s1 = x;
-    }
-    else if (x <= s2)
-    {
-      s2 = x;
-    }
-    else
-    {
-      ctd++;
-      s1 = x;
-    }
+    cin >> nums[i];
+    m = max(m, nums[i]);
   }
 
-  cout << ctd << endl;
+  if (n == 1)
+  {
+    cout << 1 << endl;
+    return;
+  }
+
+  vll diffs(n);
+
+  for (int i = 0; i < n; i++)
+  {
+    diffs[i] = m - nums[i];
+  }
+
+  ll gcd_a = 0;
+  for (int i = 0; i < n; i++)
+  {
+    gcd_a = gcd(gcd_a, diffs[i]);
+  }
+
+  ll res = 0;
+  for (int i = 0; i < n; i++)
+  {
+    res += diffs[i] / gcd_a;
+  }
+
+  set<ll> aux_nums(all(nums));
+
+  ll j = 0;
+  ll buscar = m;
+  while (aux_nums.count(buscar))
+  {
+    j++;
+    buscar -= gcd_a;
+  }
+
+  res = min(res + n, res + j);
+
+  cout << res << endl;
 }
 
 int main()

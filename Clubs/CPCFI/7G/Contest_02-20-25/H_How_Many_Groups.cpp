@@ -48,40 +48,76 @@ constexpr ll INF_LL = LONG_LONG_MAX;
 constexpr int INF_INT = INT_MAX;
 constexpr int MOD = 1e9 + 7;
 
+void dfs(vvi &graph, vector<bool> &vis, vi &g, int u, map<int, int> &aux, vi &res)
+{
+  vis[u] = true;
+  aux[g[u]]++;
+
+  // cout << "u -> " << u << endl;
+  // for (auto [k, v] : aux)
+  // {
+  //   cout << k << " -> " << v << endl;
+  // }
+
+  cout << endl;
+
+  for (auto v : graph[u])
+  {
+    if (!vis[v])
+    {
+      dfs(graph, vis, g, v, aux, res);
+    }
+  }
+
+  res[u] = aux.size();
+
+  if (aux[g[u]] == 1)
+  {
+    aux.erase(g[u]);
+  }
+  else
+  {
+    aux[g[u]]--;
+  }
+}
+
 void solve()
 {
   int n;
   cin >> n;
 
-  int ctd = 0;
-  int s1 = INT_MAX;
-  int s2 = INT_MAX;
-  for (int i = 0; i < n; i++)
+  vvi graph(n + 1);
+  vi g(n + 1);
+  vector<bool> vis(n + 1);
+  vi res(n + 1);
+
+  int raiz = -1;
+
+  for (int u = 1; u <= n; u++)
   {
-    int x;
-    cin >> x;
+    int v;
+    cin >> v;
 
-    if (s2 < s1)
+    if (v == 0)
     {
-      swap(s1, s2);
+      raiz = u;
+      continue;
     }
-
-    if (x <= s1)
-    {
-      s1 = x;
-    }
-    else if (x <= s2)
-    {
-      s2 = x;
-    }
-    else
-    {
-      ctd++;
-      s1 = x;
-    }
+    graph[v].pb(u);
   }
 
-  cout << ctd << endl;
+  for (int i = 1; i <= n; i++)
+  {
+    cin >> g[i];
+  }
+
+  map<int, int> aux;
+  dfs(graph, vis, g, raiz, aux, res);
+
+  for (int i = 1; i <= n; i++)
+  {
+    cout << res[i] << " ";
+  }
 }
 
 int main()
@@ -90,7 +126,6 @@ int main()
   cin.tie(0);
 
   int t = 1;
-  cin >> t;
 
   for (tc = 1; tc <= t; tc++)
     solve();

@@ -48,40 +48,74 @@ constexpr ll INF_LL = LONG_LONG_MAX;
 constexpr int INF_INT = INT_MAX;
 constexpr int MOD = 1e9 + 7;
 
-void solve()
+#define fore(i, a, b) for (int i = a, ThxDem = b; i < ThxDem; ++i)
+
+int res = 0;
+
+vll kmppre(vll &t)
 {
-  int n;
-  cin >> n;
-
-  int ctd = 0;
-  int s1 = INT_MAX;
-  int s2 = INT_MAX;
-  for (int i = 0; i < n; i++)
+  vll r(t.size() + 1);
+  r[0] = -1;
+  ll j = -1;
+  fore(i, 0, t.size())
   {
-    int x;
-    cin >> x;
+    while (j >= 0 && t[i] != t[j])
+      j = r[j];
+    r[i + 1] = ++j;
+  }
+  return r;
+}
 
-    if (s2 < s1)
-    {
-      swap(s1, s2);
-    }
+ll kmp(vll &s, vll &t)
+{
 
-    if (x <= s1)
-    {
-      s1 = x;
-    }
-    else if (x <= s2)
-    {
-      s2 = x;
-    }
-    else
-    {
-      ctd++;
-      s1 = x;
-    }
+  ll res = 0;
+  ll j = 0;
+  vll b = kmppre(t);
+  fore(i, 0, s.size())
+  {
+    while (j >= 0 && s[i] != t[j])
+      j = b[j];
+    if (++j == t.size())
+      res++;
   }
 
-  cout << ctd << endl;
+  return res;
+}
+
+void solve()
+{
+  ll m, n;
+  cin >> m >> n;
+
+  vll diff;
+
+  ll ant;
+  cin >> ant;
+  for (ll i = 1; i < m; i++)
+  {
+    ll act;
+    cin >> act;
+    diff.pb(act - ant);
+    ant = act;
+  }
+
+  diff.pb(INF_LL);
+  cin >> ant;
+  for (ll i = 1; i < n; i++)
+  {
+    ll act;
+    cin >> act;
+    diff.pb(act - ant);
+    ant = act;
+  }
+
+  vll pi = kmppre(diff);
+
+  // cout << "pattern -> " << pattern << endl;
+  // cout << "text -> " << text << endl;
+
+  cout << count(all(pi), m - 1) << endl;
 }
 
 int main()
@@ -89,8 +123,7 @@ int main()
   ios_base::sync_with_stdio(0);
   cin.tie(0);
 
-  int t = 1;
-  cin >> t;
+  ll t = 1;
 
   for (tc = 1; tc <= t; tc++)
     solve();

@@ -53,35 +53,56 @@ void solve()
   int n;
   cin >> n;
 
-  int ctd = 0;
-  int s1 = INT_MAX;
-  int s2 = INT_MAX;
+  vvl rab(n, vll(n, 0));
   for (int i = 0; i < n; i++)
   {
-    int x;
-    cin >> x;
-
-    if (s2 < s1)
+    for (int j = 0; j < n; j++)
     {
-      swap(s1, s2);
-    }
-
-    if (x <= s1)
-    {
-      s1 = x;
-    }
-    else if (x <= s2)
-    {
-      s2 = x;
-    }
-    else
-    {
-      ctd++;
-      s1 = x;
+      cin >> rab[i][j];
     }
   }
 
-  cout << ctd << endl;
+  vll S((1 << n), 0);
+
+  for (int mask = 0; mask < (1 << n); mask++)
+  {
+    for (int i = 0; i < n; i++)
+    {
+      for (int j = i + 1; j < n; j++)
+      {
+        if (((1 << i) & mask) && ((1 << j) & mask))
+        {
+          S[mask] += rab[i][j];
+        }
+      }
+    }
+  }
+
+  // for (int mask = 0; mask < (1 << n); mask++)
+  // {
+  //   bitset<8> bs(mask);
+  //   cout << bs << " -> " << S[mask] << endl;
+  // }
+
+  vll dp((1 << n), 0);
+
+  for (int mask = 0; mask < (1 << n); mask++)
+  {
+    for (int s = mask;; s = (s - 1) & mask)
+    {
+
+      if (s == 0)
+      {
+        dp[mask] = max(dp[mask], S[mask]);
+        break;
+      }
+
+      int complemento = mask & ~(s);
+      dp[mask] = max(dp[mask], dp[s] + S[complemento]);
+    }
+  }
+
+  cout << dp[(1 << n) - 1] << endl;
 }
 
 int main()
@@ -90,7 +111,6 @@ int main()
   cin.tie(0);
 
   int t = 1;
-  cin >> t;
 
   for (tc = 1; tc <= t; tc++)
     solve();

@@ -50,34 +50,42 @@ constexpr int MOD = 1e9 + 7;
 
 void solve()
 {
-  int n;
-  cin >> n;
+  ll n, k;
+  cin >> n >> k;
 
-  int ctd = 0;
-  int s1 = INT_MAX;
-  int s2 = INT_MAX;
-  for (int i = 0; i < n; i++)
+  vector<vector<ll>> nums(n + 2, vector<ll>(n + 2, -1));
+
+  for (int i = 1; i <= n; i++)
   {
-    int x;
-    cin >> x;
+    for (int j = 1; j <= n; j++)
+    {
+      cin >> nums[i][j];
+    }
+  }
 
-    if (s2 < s1)
-    {
-      swap(s1, s2);
-    }
+  ll ctd = 0;
+  int inc = k - 1;
 
-    if (x <= s1)
+  for (int i = 1; i <= n - k + 1; i++)
+  {
+    for (int j = 1; j <= n - k + 1; j++)
     {
-      s1 = x;
-    }
-    else if (x <= s2)
-    {
-      s2 = x;
-    }
-    else
-    {
-      ctd++;
-      s1 = x;
+
+      unordered_set<int> aux;
+      aux.insert(nums[i][j]);
+      aux.insert(nums[i + inc][j]);
+      aux.insert(nums[i][j + inc]);
+      aux.insert(nums[i + inc][j + inc]);
+
+      if (aux.size() == 1)
+      {
+        ctd++;
+      }
+      // cout << "i: " << i << endl;
+      // cout << "j: " << j << endl;
+
+      // cout << "i + k -1: " << i + k - 1 << endl;
+      // cout << "j + k -1: " << j + k - 1 << endl;
     }
   }
 
@@ -90,7 +98,6 @@ int main()
   cin.tie(0);
 
   int t = 1;
-  cin >> t;
 
   for (tc = 1; tc <= t; tc++)
     solve();

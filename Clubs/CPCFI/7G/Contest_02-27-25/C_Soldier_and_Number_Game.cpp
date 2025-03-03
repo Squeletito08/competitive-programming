@@ -48,40 +48,29 @@ constexpr ll INF_LL = LONG_LONG_MAX;
 constexpr int INF_INT = INT_MAX;
 constexpr int MOD = 1e9 + 7;
 
-void solve()
+int MAX_N = 1e7;
+vector<int> sieve(MAX_N);
+vector<ll> prime_factors(MAX_N);
+vector<ll> prefix(MAX_N + 1);
+
+void criba()
 {
-  int n;
-  cin >> n;
-
-  int ctd = 0;
-  int s1 = INT_MAX;
-  int s2 = INT_MAX;
-  for (int i = 0; i < n; i++)
+  for (int i = 2; i <= MAX_N; i++)
   {
-    int x;
-    cin >> x;
-
-    if (s2 < s1)
+    if (sieve[i] == 0)
     {
-      swap(s1, s2);
-    }
-
-    if (x <= s1)
-    {
-      s1 = x;
-    }
-    else if (x <= s2)
-    {
-      s2 = x;
-    }
-    else
-    {
-      ctd++;
-      s1 = x;
+      for (int j = i; j <= MAX_N; j += i)
+        sieve[j] = i;
     }
   }
+}
 
-  cout << ctd << endl;
+void solve()
+{
+  int a, b;
+  cin >> a >> b;
+
+  cout << prefix[a] - prefix[b] << endl;
 }
 
 int main()
@@ -91,6 +80,35 @@ int main()
 
   int t = 1;
   cin >> t;
+
+  criba();
+
+  for (int i = 2; i < MAX_N; i++)
+  {
+    prime_factors[i] = prime_factors[i / sieve[i]] + 1;
+  }
+
+  for (int i = 1; i <= MAX_N; i++)
+  {
+    prefix[i] = prefix[i - 1] + prime_factors[i];
+  }
+
+  // cout << "criba -> " << endl;
+  // for (int i = 0; i < 100; i++)
+  // {
+  //   cout << i << "-> " << sieve[i] << endl;
+  // }
+  // cout << "prime factores -> " << endl;
+  // for (int i = 0; i < 100; i++)
+  // {
+  //   cout << i << "-> " << prime_factors[i] << endl;
+  // }
+
+  // cout << "Prefix: " << endl;
+  // for (int i = 0; i < 100; i++)
+  // {
+  //   cout << i << " -> " << prefix[i] << endl;
+  // }
 
   for (tc = 1; tc <= t; tc++)
     solve();

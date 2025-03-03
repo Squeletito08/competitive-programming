@@ -50,35 +50,118 @@ constexpr int MOD = 1e9 + 7;
 
 void solve()
 {
-  int n;
-  cin >> n;
+  string s;
+  cin >> s;
+  int ctd = 1;
 
-  int ctd = 0;
-  int s1 = INT_MAX;
-  int s2 = INT_MAX;
-  for (int i = 0; i < n; i++)
+  int i = 0;
+  int n = sz(s);
+
+  int a = -1;
+  int b = -1;
+
+  int maximo = INT_MIN;
+
+  while (i < n)
   {
-    int x;
-    cin >> x;
 
-    if (s2 < s1)
+    int tam = 1;
+
+    if (s[i] != '0')
     {
-      swap(s1, s2);
+      i++;
+      continue;
     }
 
-    if (x <= s1)
+    while (i + 1 < n && s[i + 1] == '0')
     {
-      s1 = x;
+      i++;
+      tam++;
     }
-    else if (x <= s2)
+
+    if (i == n - 1)
     {
-      s2 = x;
+      break;
+    }
+
+    while (i + 1 < n && s[i + 1] == '1')
+    {
+      i++;
+      tam++;
+    }
+
+    if (tam > maximo)
+    {
+      a = i - tam + 1;
+      b = i;
+      maximo = tam;
+    }
+
+    i++;
+  }
+
+  if (a == -1 && b == -1)
+  {
+    int aux = 0;
+
+    i = 0;
+
+    while (i < n)
+    {
+      if (s[i] == '0')
+      {
+        while (i + 1 < n && s[i + 1] == '0')
+          i++;
+        aux++;
+      }
+      else
+      {
+        while (i + 1 < n && s[i + 1] == '1')
+          i++;
+        aux++;
+      }
+      i++;
+    }
+    cout << aux << endl;
+    return;
+  }
+
+  i = 0;
+
+  while (i < a)
+  {
+    if (s[i] == '0')
+    {
+      while (i + 1 < n && s[i + 1] == '0')
+        i++;
+      ctd++;
     }
     else
     {
+      while (i + 1 < n && s[i + 1] == '1')
+        i++;
       ctd++;
-      s1 = x;
     }
+    i++;
+  }
+
+  i = b + 1;
+
+  while (i < n)
+  {
+    if (s[i] == '0')
+    {
+      while (i + 1 < n && s[i + 1] == '0')
+        i++;
+      ctd++;
+    }
+    else
+    {
+      while (i + 1 < n && s[i + 1] == '1')
+        i++;
+      ctd++;
+    }
+    i++;
   }
 
   cout << ctd << endl;

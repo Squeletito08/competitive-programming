@@ -53,35 +53,33 @@ void solve()
   int n;
   cin >> n;
 
-  int ctd = 0;
-  int s1 = INT_MAX;
-  int s2 = INT_MAX;
+  vector<pii> p(n);
+
   for (int i = 0; i < n; i++)
   {
-    int x;
-    cin >> x;
-
-    if (s2 < s1)
-    {
-      swap(s1, s2);
-    }
-
-    if (x <= s1)
-    {
-      s1 = x;
-    }
-    else if (x <= s2)
-    {
-      s2 = x;
-    }
-    else
-    {
-      ctd++;
-      s1 = x;
-    }
+    int a;
+    cin >> a;
+    p[i].fi = a;
+  }
+  for (int i = 0; i < n; i++)
+  {
+    int a;
+    cin >> a;
+    p[i].se = a;
   }
 
-  cout << ctd << endl;
+  sort(all(p));
+
+  for (int i = 0; i < n; i++)
+  {
+    cout << p[i].fi << " ";
+  }
+  cout << endl;
+  for (int i = 0; i < n; i++)
+  {
+    cout << p[i].se << " ";
+  }
+  cout << endl;
 }
 
 int main()
